@@ -1,30 +1,82 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
+'use client';
+
 import React from 'react';
-import Link from 'next/link';
-import { Navbar, Container, Nav, Button } from 'react-bootstrap';
-import { signOut } from '../utils/auth';
+import { Navbar, Nav, Container, Offcanvas, Button } from 'react-bootstrap';
+import PropTypes from 'prop-types';
 
-export default function NavBar() {
+function AppNavbar({ onSignOut }) {
   return (
-    <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-      <Container>
-        <Link passHref href="/" className='navbar-brand'>
-         CHANGE ME
-        </Link>
-        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-        <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="me-auto">
-            {/* CLOSE NAVBAR ON LINK SELECTION: https://stackoverflow.com/questions/72813635/collapse-on-select-react-bootstrap-navbar-with-nextjs-not-working */}
-            <Link className="nav-link" href="/">
-              Home
-            </Link>
-          </Nav>
+    <Navbar
+      expand={false}
+      style={{ backgroundColor: '#343a40' }} // Navbar background
+      variant="dark"
+    >
+      <Container fluid>
+        {/* Hamburger Menu */}
+        <Navbar.Toggle aria-controls="offcanvasNavbar" className="me-auto" style={{ marginLeft: '10px' }} />
 
-          <Button variant="danger" onClick={signOut}>
-              Sign Out
-          </Button>
-        </Navbar.Collapse>
+        {/* Centered Brand */}
+        <Navbar.Brand
+          href="/"
+          className="mx-auto"
+          style={{
+            position: 'absolute',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            color: 'white',
+          }}
+        >
+          Aura
+        </Navbar.Brand>
+
+        {/* Sign-Out Button */}
+        <Button variant="outline-light" onClick={onSignOut} style={{ marginRight: '10px' }}>
+          Sign Out
+        </Button>
+
+        {/* Offcanvas (Hamburger Menu Content) */}
+        <Navbar.Offcanvas id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel" placement="start" style={{ backgroundColor: '#343a40', color: 'white' }}>
+          <Offcanvas.Header closeButton>
+            <Offcanvas.Title id="offcanvasNavbarLabel" style={{ color: 'white' }}>
+              Menu
+            </Offcanvas.Title>
+          </Offcanvas.Header>
+          <Offcanvas.Body>
+            <Nav className="flex-column">
+              <Nav.Link href="/" className="text-light">
+                Home
+              </Nav.Link>
+              <Nav.Link href="/add-request" className="text-light">
+                Add Request
+              </Nav.Link>
+              <Nav.Link href="/movies" className="text-light">
+                Movies
+              </Nav.Link>
+              <Nav.Link href="/shows" className="text-light">
+                Shows
+              </Nav.Link>
+              <Nav.Link href="/books" className="text-light">
+                Books
+              </Nav.Link>
+              <Nav.Link href="/music" className="text-light">
+                Music
+              </Nav.Link>
+              <Nav.Link href="/podcasts" className="text-light">
+                Podcasts
+              </Nav.Link>
+              <Nav.Link href="/profile" className="text-light">
+                User Profile
+              </Nav.Link>
+            </Nav>
+          </Offcanvas.Body>
+        </Navbar.Offcanvas>
       </Container>
     </Navbar>
   );
 }
+
+AppNavbar.propTypes = {
+  onSignOut: PropTypes.func.isRequired,
+};
+
+export default AppNavbar;
