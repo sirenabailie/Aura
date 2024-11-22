@@ -1,0 +1,23 @@
+{
+  "-NvOi_XxKFgQmbj4Wygx": {
+    "firebaseKey": "-NvOi_XxKFgQmbj4Wygx",
+    "name": "Books"
+  },
+  "-NvOi_YxKJgQmbj5Wyzx": {
+    "firebaseKey": "-NvOi_YxKJgQmbj5Wyzx",
+    "name": "Movies"
+  },
+  "-NvOi_ZxKLgQmbj6Wyax": {
+    "firebaseKey": "-NvOi_ZxKLgQmbj6Wyax",
+    "name": "Shows"
+  },
+  "-NvOi_ZxKLgQmbj6Wybx": {
+    "firebaseKey": "-NvOi_ZxKLgQmbj6Wybx",
+    "name": "Music"
+  },
+  "-NvOi_ZxKLgQmbj6Wycx": {
+    "firebaseKey": "-NvOi_ZxKLgQmbj6Wycx",
+    "name": "Podcasts"
+  }
+  
+}
