@@ -5,27 +5,33 @@ import PropTypes from 'prop-types';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
-import { faPenToSquare } from '@fortawesome/free-regular-svg-icons';
-import Link from 'next/link';
+import { faTrashCan, faPenToSquare, faEllipsisH } from '@fortawesome/free-regular-svg-icons';
+import { Dropdown, ButtonGroup } from 'react-bootstrap';
+import { useRouter } from 'next/navigation';
 import getTags from '../api/tagData';
 import { deletePost } from '../api/postData';
+import { useAuth } from '../utils/context/authContext';
 
 function PostCard({ postObj, onUpdate }) {
+  const { user } = useAuth();
+  const [tagName, setTagName] = useState(null);
+  const router = useRouter();
+
   const deleteThisPost = () => {
     if (window.confirm(`Delete ${postObj.title}?`)) {
       deletePost(postObj.firebaseKey).then(() => onUpdate());
     }
   };
 
-  const [tagName, setTagName] = useState(null);
+  const handleEdit = (firebaseKey) => {
+    router.push(`/Posts/${firebaseKey}/Edit`);
+  };
 
   useEffect(() => {
-    // Fetch tags and find the matching tag name
     getTags().then((tags) => {
       const matchingTag = tags.find((tag) => tag.firebaseKey === postObj.tagId);
       if (matchingTag) {
-        setTagName(matchingTag.name); // Set the tag name for the post
+        setTagName(matchingTag.name);
       }
     });
   }, [postObj.tagId]);
@@ -36,8 +42,8 @@ function PostCard({ postObj, onUpdate }) {
       style={{
         width: '18rem',
         margin: '10px',
-        backgroundColor: '#343a40', // Dark mode background
-        color: 'white', // Text color for dark mode
+        backgroundColor: '#343a40',
+        color: 'white',
       }}
     >
       <Card.Img
@@ -46,35 +52,82 @@ function PostCard({ postObj, onUpdate }) {
         alt={postObj.title}
         style={{
           height: '400px',
-          objectFit: 'cover', // Ensures the image fits well
+          objectFit: 'cover',
         }}
       />
-      <Card.Body>
+      <Card.Body style={{ position: 'relative', paddingBottom: '50px' }}>
         <Card.Title>{postObj.title}</Card.Title>
-        <hr style={{ backgroundColor: 'white', height: '1px' }} /> {/* Styled break line */}
+        <hr style={{ backgroundColor: 'white', height: '1px' }} />
         <h6>{postObj.content}</h6>
-        {/* Render Tag Button */}
+
         {tagName && (
-          <div className="mt-3">
-            <Button
-              variant="outline-light"
-              href={`/tagStories/${postObj.tagId}`} // Link to tag-specific stories
-              className="badge"
-              style={{ fontSize: '0.8rem' }}
-            >
+          <div className="mt-3 text-center">
+            <Button variant="outline-light" href={`/tagStories/${postObj.tagId}`} className="badge" style={{ fontSize: '0.8rem' }}>
               {tagName}
             </Button>
-
-            <Button variant="dark" onClick={deleteThisPost} className="m-2" title="Delete Post">
-              <FontAwesomeIcon icon={faTrash} />
-            </Button>
-
-            <Link href={`/Posts/${postObj.firebaseKey}/Edit`} passHref>
-              <Button variant="dark" className="m-2" title="Edit Post">
-                <FontAwesomeIcon icon={faPenToSquare} />
-              </Button>
-            </Link>
           </div>
+        )}
+
+        {user?.uid === postObj.uid && (
+          <Dropdown
+            as={ButtonGroup}
+            className="dropdown-menu-right"
+            style={{
+              position: 'absolute',
+              bottom: '10px',
+              right: '10px',
+            }}
+          >
+            <Dropdown.Toggle
+              variant="dark"
+              style={{
+                background: 'none',
+                border: 'none',
+                color: 'white',
+                padding: '0',
+              }}
+            >
+              <FontAwesomeIcon icon={faEllipsisH} style={{ fontSize: '24px' }} />
+            </Dropdown.Toggle>
+
+            <Dropdown.Menu
+              style={{
+                backgroundColor: 'rgba(52, 58, 64, 0.9)', // Transparent dark background
+                border: 'none',
+                textAlign: 'left',
+                boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
+              }}
+            >
+              <Dropdown.Item
+                as="button"
+                className="d-flex align-items-center"
+                style={{
+                  padding: '0.5rem',
+                  color: 'white',
+                  backgroundColor: 'transparent',
+                  border: 'none',
+                }}
+                onClick={() => handleEdit(postObj.firebaseKey)}
+              >
+                <FontAwesomeIcon icon={faPenToSquare} className="me-2" />
+                Edit
+              </Dropdown.Item>
+              <Dropdown.Item
+                as="button"
+                className="d-flex align-items-center"
+                style={{
+                  padding: '0.5rem',
+                  color: 'white',
+                  backgroundColor: 'transparent',
+                  border: 'none',
+                }}
+                onClick={deleteThisPost}
+              >
+                <FontAwesomeIcon icon={faTrashCan} className="me-2" />
+                Delete
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
         )}
       </Card.Body>
     </Card>
@@ -89,8 +142,9 @@ PostCard.propTypes = {
     timestamp: PropTypes.string,
     firebaseKey: PropTypes.string,
     tagId: PropTypes.string,
+    uid: PropTypes.string.isRequired,
   }).isRequired,
-  onUpdate: PropTypes.func.isRequired, // Validate onUpdate
+  onUpdate: PropTypes.func.isRequired,
 };
 
 export default PostCard;
