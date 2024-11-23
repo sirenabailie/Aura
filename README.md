@@ -48,6 +48,6 @@ Aura is designed for users who enjoy discovering media based on aesthetics. Whet
 
 ---
 
-## Loom Walkthrough  -- TBA
-[Watch the Walkthrough Video](#)  
-*A 1-minute video overview of the app’s features and functionality.*
+## Loom Walkthrough 
+[Watch the MVP Walkthrough Video](https://www.loom.com/share/794a5b93ec974aa7a1dcc016827d5d0b)  
+
