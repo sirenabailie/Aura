@@ -7,7 +7,7 @@ Aura is a media recommendation platform where users can upload aesthetic images 
 
 ## Links  
 - **Wireframes/Prototype**: [View Wireframes on Figma](https://www.figma.com/design/n63U0aDJxKkvS4qrmC3WHG/Aura-Wireframe?node-id=101-967&node-type=instance&t=8pHC8XS4LSS99hD0-0)  
-- **Deployed Project**: TBA 
+- **Deployed Project**: [Aura Netlify](https://aura-media.netlify.app/)
 - **Project Board**: [View Project Board on GitHub](https://github.com/sirenabailie/Aura/projects?query=is%3Aopen)
 
 ---
