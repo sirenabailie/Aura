@@ -2,9 +2,9 @@
 
 import React from 'react';
 import { Navbar, Nav, Container, Offcanvas, Button } from 'react-bootstrap';
-import PropTypes from 'prop-types';
+import { signOut } from '../utils/auth';
 
-function AppNavbar({ onSignOut }) {
+function AppNavbar() {
   return (
     <Navbar
       expand={false}
@@ -30,7 +30,7 @@ function AppNavbar({ onSignOut }) {
         </Navbar.Brand>
 
         {/* Sign-Out Button */}
-        <Button variant="outline-light" onClick={onSignOut} style={{ marginRight: '10px' }}>
+        <Button variant="outline-light" onClick={signOut} style={{ marginRight: '10px' }}>
           Sign Out
         </Button>
 
@@ -74,9 +74,5 @@ function AppNavbar({ onSignOut }) {
     </Navbar>
   );
 }
-
-AppNavbar.propTypes = {
-  onSignOut: PropTypes.func.isRequired,
-};
 
 export default AppNavbar;
