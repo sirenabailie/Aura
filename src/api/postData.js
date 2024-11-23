@@ -17,7 +17,7 @@ const getPosts = () =>
 
 const createPost = (payload) =>
   new Promise((resolve, reject) => {
-    fetch(`${endpoint}/posts.json`, {
+    fetch(`${endpoint}/Posts.json`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -29,4 +29,18 @@ const createPost = (payload) =>
       .catch(reject);
   });
 
-export { getPosts, createPost };
+const updatePost = (payload) =>
+  new Promise((resolve, reject) => {
+    fetch(`${endpoint}/Posts/${payload.firebaseKey}.json`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    })
+      .then((response) => response.json())
+      .then(resolve)
+      .catch(reject);
+  });
+
+export { getPosts, createPost, updatePost };

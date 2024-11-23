@@ -34,7 +34,7 @@ function AppNavbar({ onSignOut }) {
           Sign Out
         </Button>
 
-        {/* Offcanvas (Hamburger Menu Content) */}
+        {/* Hamburger Menu Content */}
         <Navbar.Offcanvas id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel" placement="start" style={{ backgroundColor: '#343a40', color: 'white' }}>
           <Offcanvas.Header closeButton>
             <Offcanvas.Title id="offcanvasNavbarLabel" style={{ color: 'white' }}>
@@ -46,7 +46,7 @@ function AppNavbar({ onSignOut }) {
               <Nav.Link href="/" className="text-light">
                 Home
               </Nav.Link>
-              <Nav.Link href="/add-request" className="text-light">
+              <Nav.Link href="/Posts/New" className="text-light">
                 Add Request
               </Nav.Link>
               <Nav.Link href="/movies" className="text-light">

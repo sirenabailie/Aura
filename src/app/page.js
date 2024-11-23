@@ -20,8 +20,8 @@ function Home() {
   return (
     <div className="container mt-4">
       <div className="d-flex flex-wrap justify-content-center">
-        {posts.map((post) => (
-          <PostCard key={post.firebaseKey} postObj={post} />
+        {posts.map((post, index) => (
+          <PostCard key={post.firebaseKey || index} postObj={post} />
         ))}
       </div>
     </div>
