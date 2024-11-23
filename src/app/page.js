@@ -19,7 +19,7 @@ function Home() {
 
   return (
     <div className="container mt-4">
-      <div className="d-flex flex-wrap">
+      <div className="d-flex flex-wrap justify-content-center">
         {posts.map((Posts) => (
           <PostCard key={Posts.firebaseKey} postObj={Posts} onUpdate={getAllPosts} />
         ))}

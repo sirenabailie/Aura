@@ -6,6 +6,8 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faPenToSquare } from '@fortawesome/free-regular-svg-icons';
+import Link from 'next/link';
 import getTags from '../api/tagData';
 import { deletePost } from '../api/postData';
 
@@ -62,9 +64,16 @@ function PostCard({ postObj, onUpdate }) {
             >
               {tagName}
             </Button>
+
             <Button variant="dark" onClick={deleteThisPost} className="m-2" title="Delete Post">
               <FontAwesomeIcon icon={faTrash} />
             </Button>
+
+            <Link href={`/Posts/${postObj.firebaseKey}/Edit`} passHref>
+              <Button variant="dark" className="m-2" title="Edit Post">
+                <FontAwesomeIcon icon={faPenToSquare} />
+              </Button>
+            </Link>
           </div>
         )}
       </Card.Body>

@@ -56,4 +56,17 @@ const deletePost = (firebaseKey) =>
       .catch(reject);
   });
 
-export { getPosts, createPost, updatePost, deletePost };
+const getSinglePost = (firebaseKey) =>
+  new Promise((resolve, reject) => {
+    fetch(`${endpoint}/Posts/${firebaseKey}.json`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => resolve(data))
+      .catch(reject);
+  });
+
+export { getPosts, createPost, updatePost, deletePost, getSinglePost };

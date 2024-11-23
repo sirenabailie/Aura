@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation'; // Use Next.js router
 import { Form, Button, Container } from 'react-bootstrap';
+import PropTypes from 'prop-types';
 import { useAuth } from '../../utils/context/authContext';
 import getTags from '../../api/tagData';
 import { createPost, updatePost } from '../../api/postData';
 
-function PostForm() {
+function PostForm({ postObj = {} }) {
   const router = useRouter();
   const { user } = useAuth();
   const [formData, setFormData] = useState({
@@ -21,6 +22,13 @@ function PostForm() {
     getTags().then(setTags);
   }, []);
 
+  // Set form data if editing
+  useEffect(() => {
+    if (postObj.firebaseKey) {
+      setFormData(postObj);
+    }
+  }, [postObj]);
+
   // Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -33,17 +41,14 @@ function PostForm() {
   // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (formData.firebaseKey) {
-      // Update an existing post
-      updatePost(formData).then(() => router.push(`/post/${formData.firebaseKey}`));
+    if (postObj.firebaseKey) {
+      updatePost(formData).then(() => router.push(`/`));
     } else {
-      // Create a new post
-      const payload = { ...formData, uid: user.uid }; // Include the user's UID in the payload
+      const payload = { ...formData, uid: user.uid };
       createPost(payload).then(({ name }) => {
-        // `name` contains the generated firebaseKey
         const patchPayload = { firebaseKey: name };
         updatePost(patchPayload).then(() => {
-          router.push('/'); // Redirect to the home page
+          router.push('/');
         });
       });
     }
@@ -137,13 +142,23 @@ function PostForm() {
 
         {/* Submit Button */}
         <div className="text-center">
-          <Button type="submit" variant="light">
-            Submit
+          <Button variant="dark" type="submit">
+            {postObj.firebaseKey ? 'Update' : 'Create'} Post
           </Button>
         </div>
       </Form>
     </Container>
   );
 }
+
+PostForm.propTypes = {
+  postObj: PropTypes.shape({
+    title: PropTypes.string,
+    content: PropTypes.string,
+    tagId: PropTypes.string,
+    image: PropTypes.string,
+    firebaseKey: PropTypes.string,
+  }),
+};
 
 export default PostForm;
