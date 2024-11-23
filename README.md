@@ -28,18 +28,21 @@ Aura is designed for users who enjoy discovering media based on aesthetics. Whet
 
 ---
 
-## Screenshots -- TBA
+## Screenshots 
 ### Homepage  
- 
-*The homepage displays all requests with options to filter or search.*
 
-### View Page  
-![View Page Screenshot](#)  
-*Users can see details of a request, view recommendations, and add their own.*
+![Screenshot 2024-11-23 150837](https://github.com/user-attachments/assets/8a86ddad-c01b-4983-acf8-2d643c90a798)
+
+
+![Screenshot 2024-11-23 150941](https://github.com/user-attachments/assets/7fa6fa85-9604-49bb-bb77-9d3b48c153d9)
+
+
+![Screenshot 2024-11-23 151248](https://github.com/user-attachments/assets/701ff8a8-6c4c-40c6-aa7c-c3bb598bd0d6)
+
 
 ### Create Request Page  
-![Create Request Screenshot](#)  
-*Drag-and-drop multiple images and fill out details to create a request.*
+
+![Screenshot 2024-11-23 150905](https://github.com/user-attachments/assets/46319cb6-2c6e-4519-9f63-43b810397de3)
 
 ---
 
