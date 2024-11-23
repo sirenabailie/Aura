@@ -4,9 +4,18 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import getTags from '../api/tagData';
+import { deletePost } from '../api/postData';
 
-function PostCard({ postObj }) {
+function PostCard({ postObj, onUpdate }) {
+  const deleteThisPost = () => {
+    if (window.confirm(`Delete ${postObj.title}?`)) {
+      deletePost(postObj.firebaseKey).then(() => onUpdate());
+    }
+  };
+
   const [tagName, setTagName] = useState(null);
 
   useEffect(() => {
@@ -53,6 +62,9 @@ function PostCard({ postObj }) {
             >
               {tagName}
             </Button>
+            <Button variant="dark" onClick={deleteThisPost} className="m-2" title="Delete Post">
+              <FontAwesomeIcon icon={faTrash} />
+            </Button>
           </div>
         )}
       </Card.Body>
@@ -69,6 +81,7 @@ PostCard.propTypes = {
     firebaseKey: PropTypes.string,
     tagId: PropTypes.string,
   }).isRequired,
+  onUpdate: PropTypes.func.isRequired, // Validate onUpdate
 };
 
 export default PostCard;

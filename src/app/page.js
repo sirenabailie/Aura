@@ -19,9 +19,9 @@ function Home() {
 
   return (
     <div className="container mt-4">
-      <div className="d-flex flex-wrap justify-content-center">
-        {posts.map((post, index) => (
-          <PostCard key={post.firebaseKey || index} postObj={post} />
+      <div className="d-flex flex-wrap">
+        {posts.map((Posts) => (
+          <PostCard key={Posts.firebaseKey} postObj={Posts} onUpdate={getAllPosts} />
         ))}
       </div>
     </div>
