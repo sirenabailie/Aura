@@ -1,13 +1,13 @@
-'use client';
-
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation'; // Use Next.js router
 import { Form, Button, Container } from 'react-bootstrap';
+import { useAuth } from '../../utils/context/authContext';
 import getTags from '../../api/tagData';
-import { createPost } from '../../api/postData';
+import { createPost, updatePost } from '../../api/postData';
 
 function PostForm() {
   const router = useRouter();
+  const { user } = useAuth();
   const [formData, setFormData] = useState({
     title: '',
     content: '',
@@ -33,13 +33,19 @@ function PostForm() {
   // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (formData.title && formData.content && formData.tagId && formData.image) {
-      createPost(formData).then(() => {
-        setFormData({ title: '', content: '', tagId: '', image: '' }); // Reset form
-        router.push('/'); // Navigate to the home page
-      });
+    if (formData.firebaseKey) {
+      // Update an existing post
+      updatePost(formData).then(() => router.push(`/post/${formData.firebaseKey}`));
     } else {
-      alert('Please fill out all fields before submitting.');
+      // Create a new post
+      const payload = { ...formData, uid: user.uid }; // Include the user's UID in the payload
+      createPost(payload).then(({ name }) => {
+        // `name` contains the generated firebaseKey
+        const patchPayload = { firebaseKey: name };
+        updatePost(patchPayload).then(() => {
+          router.push('/'); // Redirect to the home page
+        });
+      });
     }
   };
 
