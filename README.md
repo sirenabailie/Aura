@@ -20,11 +20,11 @@ Aura is designed for users who enjoy discovering media based on aesthetics. Whet
 ## Features  
 - **User Authentication**: Secure login and logout with Google authentication via Firebase.  
 - **Create Requests**: Upload images with descriptions and tags for media types (books, movies, shows, music, podcasts).  
-- **Recommendations**: Post recommendations with comments, profile pictures, and usernames.  
-- **Favorites**: Save your favorite requests for easy access later.  
-- **Dynamic Search** (Stretch Goal): Search for requests by title or media type.  
-- **Dark Mode** (Stretch Goal): Toggle between light and dark themes.  
-- **Filter Requests** (Stretch Goal): Filter requests by most recent, most likes, or most comments.  
+- **Recommendations -- TBA**: Post recommendations with comments, profile pictures, and usernames.  
+- **Favorites -- TBA**: Save your favorite requests for easy access later.  
+- **Dynamic Search -- TBA** (Stretch Goal): Search for requests by title or media type.  
+- **Dark Mode -- TBA** (Stretch Goal): Toggle between light and dark themes.  
+- **Filter Requests -- TBA** (Stretch Goal): Filter requests by most recent, most likes, or most comments.  
 
 ---
 
