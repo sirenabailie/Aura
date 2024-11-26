@@ -69,4 +69,19 @@ const getSinglePost = (firebaseKey) =>
       .catch(reject);
   });
 
+const getPostsByTag = (tagId) =>
+  new Promise((resolve, reject) => {
+    fetch(`${endpoint}/Posts.json?orderBy="tagId"&equalTo="${tagId}"`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => resolve(Object.values(data)))
+      .catch(reject);
+  });
+
+export { getPostsByTag };
+
 export { getPosts, createPost, updatePost, deletePost, getSinglePost };
