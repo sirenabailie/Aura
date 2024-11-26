@@ -6,11 +6,7 @@ import { signOut } from '../utils/auth';
 
 function AppNavbar() {
   return (
-    <Navbar
-      expand={false}
-      style={{ backgroundColor: '#343a40' }} // Navbar background
-      variant="dark"
-    >
+    <Navbar expand={false} style={{ backgroundColor: '#343a40' }} variant="dark">
       <Container fluid>
         {/* Hamburger Menu */}
         <Navbar.Toggle aria-controls="offcanvasNavbar" className="me-auto" style={{ marginLeft: '10px' }} />
@@ -29,7 +25,6 @@ function AppNavbar() {
           Aura
         </Navbar.Brand>
 
-        {/* Sign-Out Button */}
         <Button variant="outline-light" onClick={signOut} style={{ marginRight: '10px' }}>
           Sign Out
         </Button>
@@ -49,19 +44,20 @@ function AppNavbar() {
               <Nav.Link href="/Posts/New" className="text-light">
                 Add Request
               </Nav.Link>
-              <Nav.Link href="/movies" className="text-light">
+              {/* Updated Links for Dynamic Routing */}
+              <Nav.Link href="/Posts/Tags/Movies" className="text-light">
                 Movies
               </Nav.Link>
-              <Nav.Link href="/shows" className="text-light">
+              <Nav.Link href="/Posts/Tags/Shows" className="text-light">
                 Shows
               </Nav.Link>
-              <Nav.Link href="/books" className="text-light">
+              <Nav.Link href="/Posts/Tags/Books" className="text-light">
                 Books
               </Nav.Link>
-              <Nav.Link href="/music" className="text-light">
+              <Nav.Link href="/Posts/Tags/Music" className="text-light">
                 Music
               </Nav.Link>
-              <Nav.Link href="/podcasts" className="text-light">
+              <Nav.Link href="/Posts/Tags/Podcasts" className="text-light">
                 Podcasts
               </Nav.Link>
               <Nav.Link href="/profile" className="text-light">
