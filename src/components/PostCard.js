@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashCan, faPenToSquare } from '@fortawesome/free-regular-svg-icons';
+import { faTrashCan, faPenToSquare, faEye } from '@fortawesome/free-regular-svg-icons';
 import { faEllipsisH } from '@fortawesome/free-solid-svg-icons';
 import { Dropdown, ButtonGroup } from 'react-bootstrap';
 import { useRouter } from 'next/navigation';
@@ -26,6 +26,10 @@ function PostCard({ postObj, onUpdate }) {
 
   const handleEdit = (firebaseKey) => {
     router.push(`/Posts/${firebaseKey}/Edit`);
+  };
+
+  const handleView = (firebaseKey) => {
+    router.push(`/Posts/${firebaseKey}/View`);
   };
 
   useEffect(() => {
@@ -69,67 +73,75 @@ function PostCard({ postObj, onUpdate }) {
           </div>
         )}
 
-        {user?.uid === postObj.uid && (
-          <Dropdown
-            as={ButtonGroup}
-            className="dropdown-menu-right"
-            style={{
-              position: 'absolute',
-              bottom: '10px',
-              right: '10px',
-            }}
-          >
-            <Dropdown.Toggle
-              variant="dark"
-              style={{
-                background: 'none',
-                border: 'none',
-                color: 'white',
-                padding: '0',
-              }}
-            >
-              <FontAwesomeIcon icon={faEllipsisH} style={{ fontSize: '24px' }} />
-            </Dropdown.Toggle>
+        <div className="mt-3 d-flex justify-content-between">
+          {/* View Button */}
+          <Button variant="outline-light" onClick={() => handleView(postObj.firebaseKey)} style={{ fontSize: '0.8rem' }}>
+            <FontAwesomeIcon icon={faEye} className="me-2" />
+            View
+          </Button>
 
-            <Dropdown.Menu
+          {user?.uid === postObj.uid && (
+            <Dropdown
+              as={ButtonGroup}
+              className="dropdown-menu-right"
               style={{
-                backgroundColor: 'rgba(52, 58, 64, 0.9)', // Transparent dark background
-                border: 'none',
-                textAlign: 'left',
-                boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
+                position: 'absolute',
+                bottom: '10px',
+                right: '10px',
               }}
             >
-              <Dropdown.Item
-                as="button"
-                className="d-flex align-items-center"
+              <Dropdown.Toggle
+                variant="dark"
                 style={{
-                  padding: '0.5rem',
-                  color: 'white',
-                  backgroundColor: 'transparent',
+                  background: 'none',
                   border: 'none',
+                  color: 'white',
+                  padding: '0',
                 }}
-                onClick={() => handleEdit(postObj.firebaseKey)}
               >
-                <FontAwesomeIcon icon={faPenToSquare} className="me-2" />
-                Edit
-              </Dropdown.Item>
-              <Dropdown.Item
-                as="button"
-                className="d-flex align-items-center"
+                <FontAwesomeIcon icon={faEllipsisH} style={{ fontSize: '24px' }} />
+              </Dropdown.Toggle>
+
+              <Dropdown.Menu
                 style={{
-                  padding: '0.5rem',
-                  color: 'white',
-                  backgroundColor: 'transparent',
+                  backgroundColor: 'rgba(52, 58, 64, 0.9)', // Transparent dark background
                   border: 'none',
+                  textAlign: 'left',
+                  boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
                 }}
-                onClick={deleteThisPost}
               >
-                <FontAwesomeIcon icon={faTrashCan} className="me-2" />
-                Delete
-              </Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
-        )}
+                <Dropdown.Item
+                  as="button"
+                  className="d-flex align-items-center"
+                  style={{
+                    padding: '0.5rem',
+                    color: 'white',
+                    backgroundColor: 'transparent',
+                    border: 'none',
+                  }}
+                  onClick={() => handleEdit(postObj.firebaseKey)}
+                >
+                  <FontAwesomeIcon icon={faPenToSquare} className="me-2" />
+                  Edit
+                </Dropdown.Item>
+                <Dropdown.Item
+                  as="button"
+                  className="d-flex align-items-center"
+                  style={{
+                    padding: '0.5rem',
+                    color: 'white',
+                    backgroundColor: 'transparent',
+                    border: 'none',
+                  }}
+                  onClick={deleteThisPost}
+                >
+                  <FontAwesomeIcon icon={faTrashCan} className="me-2" />
+                  Delete
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          )}
+        </div>
       </Card.Body>
     </Card>
   );

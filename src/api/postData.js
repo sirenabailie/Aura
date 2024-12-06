@@ -82,6 +82,17 @@ const getPostsByTag = (tagId) =>
       .catch(reject);
   });
 
-export { getPostsByTag };
+const getPostByFirebaseKey = (firebaseKey) =>
+  new Promise((resolve, reject) => {
+    fetch(`${endpoint}/Posts/${firebaseKey}.json`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => resolve(data))
+      .catch(reject);
+  });
 
-export { getPosts, createPost, updatePost, deletePost, getSinglePost };
+export { getPosts, createPost, updatePost, deletePost, getSinglePost, getPostByFirebaseKey, getPostsByTag };
