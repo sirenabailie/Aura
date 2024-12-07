@@ -1,5 +1,7 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation'; // Use Next.js router
+import { useRouter } from 'next/navigation';
 import { Form, Button, Container } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { useAuth } from '../../utils/context/authContext';
@@ -13,23 +15,22 @@ function PostForm({ postObj = {} }) {
     title: '',
     content: '',
     tagId: '',
-    image: '',
+    images: [], // To store image URLs
   });
   const [tags, setTags] = useState([]);
 
-  // Fetch tags when the form loads
   useEffect(() => {
-    getTags().then(setTags);
+    getTags()
+      .then(setTags)
+      .catch((error) => console.error('Error fetching tags:', error));
   }, []);
 
-  // Set form data if editing
   useEffect(() => {
     if (postObj.firebaseKey) {
       setFormData(postObj);
     }
   }, [postObj]);
 
-  // Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({
@@ -38,18 +39,37 @@ function PostForm({ postObj = {} }) {
     }));
   };
 
-  // Handle form submission
+  const handleAddImageUrl = () => {
+    const url = formData.newImageUrl?.trim();
+    if (url) {
+      setFormData((prevState) => ({
+        ...prevState,
+        images: [...prevState.images, url],
+        newImageUrl: '',
+      }));
+    }
+  };
+
+  const handleRemoveImage = (index) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      images: prevState.images.filter((_, i) => i !== index),
+    }));
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    const payload = {
+      ...formData,
+      uid: user.uid,
+    };
+
     if (postObj.firebaseKey) {
-      updatePost(formData).then(() => router.push(`/`));
+      updatePost(payload).then(() => router.push('/'));
     } else {
-      const payload = { ...formData, uid: user.uid };
       createPost(payload).then(({ name }) => {
         const patchPayload = { firebaseKey: name };
-        updatePost(patchPayload).then(() => {
-          router.push('/');
-        });
+        updatePost(patchPayload).then(() => router.push('/'));
       });
     }
   };
@@ -60,29 +80,12 @@ function PostForm({ postObj = {} }) {
       <Form
         onSubmit={handleSubmit}
         style={{
-          backgroundColor: '#343a40', // Dark mode background
-          color: 'white', // Text color for dark mode
+          backgroundColor: '#343a40',
+          color: 'white',
           padding: '20px',
           borderRadius: '8px',
         }}
       >
-        {/* Image URL Input */}
-        <Form.Group className="mb-3" controlId="postImage">
-          <Form.Label>Image URL</Form.Label>
-          <Form.Control
-            type="url"
-            name="image"
-            placeholder="Enter an image URL"
-            value={formData.image}
-            onChange={handleChange}
-            style={{
-              backgroundColor: '#495057',
-              color: 'white',
-            }}
-            required
-          />
-        </Form.Group>
-
         {/* Title Input */}
         <Form.Group className="mb-3" controlId="postTitle">
           <Form.Label>Title</Form.Label>
@@ -140,7 +143,46 @@ function PostForm({ postObj = {} }) {
           </Form.Select>
         </Form.Group>
 
-        {/* Submit Button */}
+        {/* Add Image URLs */}
+        <Form.Group className="mb-3" controlId="imageUrls">
+          <Form.Label>Image URLs</Form.Label>
+          <div className="d-flex">
+            <Form.Control
+              type="text"
+              name="newImageUrl"
+              placeholder="Enter image URL"
+              value={formData.newImageUrl || ''}
+              onChange={handleChange}
+              style={{
+                backgroundColor: '#495057',
+                color: 'white',
+              }}
+            />
+            <Button variant="outline-light" onClick={handleAddImageUrl} style={{ marginLeft: '8px' }}>
+              Add
+            </Button>
+          </div>
+          <div className="mt-3">
+            {formData.images.map((url, index) => (
+              <div key={url} className="d-flex align-items-center mb-2">
+                <img
+                  src={url}
+                  alt={`Preview ${index + 1}`}
+                  style={{
+                    width: '60px',
+                    height: '60px',
+                    marginRight: '8px',
+                    objectFit: 'cover',
+                  }}
+                />
+                <Button variant="danger" size="sm" onClick={() => handleRemoveImage(index)}>
+                  Remove
+                </Button>
+              </div>
+            ))}
+          </div>
+        </Form.Group>
+
         <div className="text-center">
           <Button variant="dark" type="submit">
             {postObj.firebaseKey ? 'Update' : 'Create'} Post
@@ -156,7 +198,7 @@ PostForm.propTypes = {
     title: PropTypes.string,
     content: PropTypes.string,
     tagId: PropTypes.string,
-    image: PropTypes.string,
+    images: PropTypes.arrayOf(PropTypes.string),
     firebaseKey: PropTypes.string,
   }),
 };

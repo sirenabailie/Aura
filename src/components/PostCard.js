@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
+import Carousel from 'react-bootstrap/Carousel';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan, faPenToSquare, faEye } from '@fortawesome/free-regular-svg-icons';
 import { faEllipsisH } from '@fortawesome/free-solid-svg-icons';
@@ -51,15 +52,35 @@ function PostCard({ postObj, onUpdate }) {
         color: 'white',
       }}
     >
-      <Card.Img
-        variant="top"
-        src={postObj.image}
-        alt={postObj.title}
-        style={{
-          height: '400px',
-          objectFit: 'cover',
-        }}
-      />
+      {/* Image Carousel */}
+      {postObj.images?.length > 0 ? (
+        <Carousel interval={null} style={{ height: '400px' }}>
+          {postObj.images.map((image) => (
+            <Carousel.Item key={crypto.randomUUID()}>
+              <img
+                className="d-block w-100"
+                src={typeof image === 'string' ? image : image.url}
+                alt="Slide"
+                style={{
+                  height: '400px',
+                  objectFit: 'cover',
+                }}
+              />
+            </Carousel.Item>
+          ))}
+        </Carousel>
+      ) : (
+        <Card.Img
+          variant="top"
+          src="/fallback-image.jpg" // Replace with a default image
+          alt={postObj.title}
+          style={{
+            height: '400px',
+            objectFit: 'cover',
+          }}
+        />
+      )}
+
       <Card.Body style={{ position: 'relative', paddingBottom: '50px' }}>
         <Card.Title>{postObj.title}</Card.Title>
         <hr style={{ backgroundColor: 'white', height: '1px' }} />
@@ -104,7 +125,7 @@ function PostCard({ postObj, onUpdate }) {
 
               <Dropdown.Menu
                 style={{
-                  backgroundColor: 'rgba(52, 58, 64, 0.9)', // Transparent dark background
+                  backgroundColor: 'rgba(52, 58, 64, 0.9)',
                   border: 'none',
                   textAlign: 'left',
                   boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
@@ -149,6 +170,12 @@ function PostCard({ postObj, onUpdate }) {
 
 PostCard.propTypes = {
   postObj: PropTypes.shape({
+    images: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.string.isRequired,
+        url: PropTypes.string.isRequired,
+      }),
+    ),
     image: PropTypes.string,
     title: PropTypes.string,
     content: PropTypes.string,
