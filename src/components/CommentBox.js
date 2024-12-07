@@ -39,7 +39,7 @@ function CommentBox({ postId, comments, onCreateComment, onEditComment, onDelete
       setEditComment(null); // Clear edit state
       setEditedContent(''); // Clear input field
     } catch {
-      // Handle any potential errors silently or display a user-friendly message if needed
+      // Handle any potential errors silently
     }
   };
 
@@ -85,12 +85,17 @@ function CommentBox({ postId, comments, onCreateComment, onEditComment, onDelete
                       {comment.content || 'No content provided'}
                     </div>
                     <div>
-                      <Button variant="link" className="p-0 mx-2" onClick={() => handleEdit(comment)}>
-                        ✏️
-                      </Button>
-                      <Button variant="link" className="p-0 text-danger" onClick={() => onDeleteComment(comment)}>
-                        🗑️
-                      </Button>
+                      {/* Show edit/delete buttons only if the current user is the comment owner */}
+                      {user?.uid === comment.uid && (
+                        <>
+                          <Button variant="link" className="p-0 mx-2" onClick={() => handleEdit(comment)}>
+                            ✏️
+                          </Button>
+                          <Button variant="link" className="p-0 text-danger" onClick={() => onDeleteComment(comment)}>
+                            🗑️
+                          </Button>
+                        </>
+                      )}
                     </div>
                   </>
                 )}
@@ -123,7 +128,7 @@ CommentBox.propTypes = {
       postId: PropTypes.string.isRequired,
       content: PropTypes.string.isRequired,
       timestamp: PropTypes.string.isRequired,
-      user: PropTypes.string,
+      uid: PropTypes.string,
     }),
   ).isRequired,
   onCreateComment: PropTypes.func.isRequired,
