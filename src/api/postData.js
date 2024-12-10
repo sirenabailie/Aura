@@ -119,4 +119,39 @@ const getUserPosts = (uid) =>
       .catch(reject);
   });
 
-export { getPosts, createPost, updatePost, deletePost, getSinglePost, getPostByFirebaseKey, getPostsByTag, getUserPosts };
+const toggleFavorite = (uid, postId, isFavorite) =>
+  new Promise((resolve, reject) => {
+    const updates = {};
+
+    // Update the `Favorites` node for the specific user
+    updates[`Favorites/${uid}/${postId}`] = isFavorite;
+
+    // Update the `favorite` field in the `Posts` node
+    updates[`Posts/${postId}/favorite`] = isFavorite;
+
+    fetch(`${endpoint}.json`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updates),
+    })
+      .then((response) => response.json())
+      .then(resolve)
+      .catch(reject);
+  });
+
+const getPostById = (firebaseKey) =>
+  new Promise((resolve, reject) => {
+    fetch(`${endpoint}/Posts/${firebaseKey}.json`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((response) => response.json())
+      .then(resolve)
+      .catch(reject);
+  });
+
+export { getPosts, createPost, updatePost, deletePost, getSinglePost, getPostByFirebaseKey, getPostsByTag, getUserPosts, toggleFavorite, getPostById };
