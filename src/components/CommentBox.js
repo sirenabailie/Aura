@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import { Modal, Button, ListGroup, InputGroup, FormControl } from 'react-bootstrap';
 import PropTypes from 'prop-types';
@@ -23,7 +25,7 @@ function CommentBox({ postId, comments, onCreateComment, onEditComment, onDelete
       await onCreateComment(commentPayload);
       setNewComment('');
     } catch {
-      // Handle any potential errors silently or display a user-friendly message if needed
+      // Handle any potential errors silently
     }
   };
 
@@ -49,10 +51,21 @@ function CommentBox({ postId, comments, onCreateComment, onEditComment, onDelete
   };
 
   return (
-    <div>
-      <Button variant="outline-secondary" onClick={() => setShowModal(true)}>
-        Show Recommendations
-      </Button>
+    <div className="d-flex flex-column align-items-center">
+      {/* Center the "Show Recommendations" button */}
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center', // Vertically align if needed
+          width: '100%',
+          margin: '1rem 0', // Adds spacing above and below
+        }}
+      >
+        <Button variant="outline-secondary" onClick={() => setShowModal(true)}>
+          Show Recommendations
+        </Button>
+      </div>
 
       <Modal show={showModal} onHide={() => setShowModal(false)} centered>
         <Modal.Header closeButton>
