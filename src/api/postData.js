@@ -95,4 +95,28 @@ const getPostByFirebaseKey = (firebaseKey) =>
       .catch(reject);
   });
 
-export { getPosts, createPost, updatePost, deletePost, getSinglePost, getPostByFirebaseKey, getPostsByTag };
+const getUserPosts = (uid) =>
+  new Promise((resolve, reject) => {
+    fetch(`${endpoint}/Posts.json?orderBy="uid"&equalTo="${uid}"`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // Transform the returned object into an array
+        if (data) {
+          const userPosts = Object.keys(data).map((key) => ({
+            firebaseKey: key,
+            ...data[key],
+          }));
+          resolve(userPosts);
+        } else {
+          resolve([]); // No posts found
+        }
+      })
+      .catch(reject);
+  });
+
+export { getPosts, createPost, updatePost, deletePost, getSinglePost, getPostByFirebaseKey, getPostsByTag, getUserPosts };

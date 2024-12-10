@@ -3,8 +3,10 @@
 import React from 'react';
 import { Navbar, Nav, Container, Offcanvas, Button } from 'react-bootstrap';
 import { signOut } from '../utils/auth';
+import { useAuth } from '../utils/context/authContext';
 
 function AppNavbar() {
+  const { user } = useAuth();
   return (
     <Navbar expand={false} style={{ backgroundColor: '#343a40' }} variant="dark">
       <Container fluid>
@@ -60,7 +62,7 @@ function AppNavbar() {
               <Nav.Link href="/Posts/Tags/Podcasts" className="text-light">
                 Podcasts
               </Nav.Link>
-              <Nav.Link href="/profile" className="text-light">
+              <Nav.Link href={`/Profile/${user.uid}`} className="text-light">
                 User Profile
               </Nav.Link>
             </Nav>
