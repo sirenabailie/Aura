@@ -6,18 +6,31 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Carousel from 'react-bootstrap/Carousel';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashCan, faPenToSquare, faEye } from '@fortawesome/free-regular-svg-icons';
-import { faEllipsisH } from '@fortawesome/free-solid-svg-icons';
+import { faTrashCan, faPenToSquare, faEye, faStar as regularStar } from '@fortawesome/free-regular-svg-icons';
+import { faEllipsisH, faStar as solidStar } from '@fortawesome/free-solid-svg-icons';
 import { Dropdown, ButtonGroup } from 'react-bootstrap';
 import { useRouter } from 'next/navigation';
 import getTags from '../api/tagData';
-import { deletePost } from '../api/postData';
+import { deletePost, toggleFavorite } from '../api/postData';
 import { useAuth } from '../utils/context/authContext';
 
 function PostCard({ postObj, onUpdate }) {
   const { user } = useAuth();
   const [tagName, setTagName] = useState(null);
+  const [isFavorite, setIsFavorite] = useState(postObj.favorite); // Initialize favorite state
   const router = useRouter();
+
+  // Synchronize `isFavorite` state with `postObj.favorite` prop
+  useEffect(() => {
+    setIsFavorite(postObj.favorite);
+  }, [postObj.favorite]);
+
+  const handleFavoriteClick = () => {
+    toggleFavorite(user.uid, postObj.firebaseKey, !isFavorite).then(() => {
+      setIsFavorite(!isFavorite); // Update UI state
+      if (onUpdate) onUpdate(); // Trigger parent update if needed
+    });
+  };
 
   const deleteThisPost = () => {
     if (window.confirm(`Delete ${postObj.title}?`)) {
@@ -82,7 +95,18 @@ function PostCard({ postObj, onUpdate }) {
       )}
 
       <Card.Body style={{ position: 'relative', paddingBottom: '50px' }}>
-        <Card.Title>{postObj.title}</Card.Title>
+        <Card.Title>
+          {postObj.title}
+          <FontAwesomeIcon
+            icon={isFavorite ? solidStar : regularStar} // Toggle between filled and empty star
+            onClick={handleFavoriteClick}
+            style={{
+              cursor: 'pointer',
+              marginLeft: '10px',
+              color: isFavorite ? 'gold' : 'white', // Highlight gold if favorited
+            }}
+          />
+        </Card.Title>
         <hr style={{ backgroundColor: 'white', height: '1px' }} />
         <h6>{postObj.content}</h6>
 
@@ -170,17 +194,11 @@ function PostCard({ postObj, onUpdate }) {
 
 PostCard.propTypes = {
   postObj: PropTypes.shape({
-    images: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.string.isRequired,
-        url: PropTypes.string.isRequired,
-      }),
-    ),
-    image: PropTypes.string,
+    images: PropTypes.arrayOf(PropTypes.string),
     title: PropTypes.string,
     content: PropTypes.string,
-    timestamp: PropTypes.string,
-    firebaseKey: PropTypes.string,
+    favorite: PropTypes.bool, // Add favorite to PropTypes
+    firebaseKey: PropTypes.string.isRequired,
     tagId: PropTypes.string,
     uid: PropTypes.string.isRequired,
   }).isRequired,
