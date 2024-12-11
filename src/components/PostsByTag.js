@@ -1,29 +1,50 @@
-import React, { useEffect, useState } from 'react';
+'use client';
+
+import React, { useEffect, useState, useContext } from 'react';
 import PropTypes from 'prop-types';
-import { getPosts } from '../api/postData'; // Fetch all posts and filter them by tag
+import { getPosts } from '../api/postData';
+import { SearchContext } from '../utils/context/SearchContext';
 import PostCard from './PostCard';
 
 function PostsByTag({ tagId }) {
-  const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(true); // Track loading state
+  const { searchQuery } = useContext(SearchContext); // Access the global search query
+  const [posts, setPosts] = useState([]); // All posts for the tag
+  const [filteredPosts, setFilteredPosts] = useState([]); // Posts filtered by search query
+  const [loading, setLoading] = useState(true); // Loading state
 
+  // Fetch posts by tag
+  const getPostsByTag = () => {
+    setLoading(true);
+    getPosts().then((allPosts) => {
+      const tagPosts = allPosts.filter(
+        (post) => post.tagId?.includes(tagId), // Filter posts that match the current tag
+      );
+      setPosts(tagPosts);
+      setFilteredPosts(tagPosts); // Initially, display all posts for the tag
+      setLoading(false);
+    });
+  };
+
+  // Dynamically filter posts based on search query
   useEffect(() => {
-    if (tagId) {
-      setLoading(true); // Start loading state
-      getPosts().then((allPosts) => {
-        // Filter posts to include those that have the tagId in their tagId array
-        const filteredPosts = allPosts.filter((post) => post.tagId?.includes(tagId));
-        setPosts(filteredPosts);
-        setLoading(false); // Stop loading state
-      });
+    if (searchQuery.trim()) {
+      const filtered = posts.filter((post) => post.title.toLowerCase().includes(searchQuery.toLowerCase()) || post.content.toLowerCase().includes(searchQuery.toLowerCase()));
+      setFilteredPosts(filtered);
+    } else {
+      setFilteredPosts(posts); // Reset to all tag posts if search query is empty
     }
+  }, [searchQuery, posts]);
+
+  // Fetch posts when the component mounts
+  useEffect(() => {
+    getPostsByTag();
   }, [tagId]);
 
   if (loading) {
-    return <p> </p>;
+    return <p>Loading posts...</p>;
   }
 
-  return <div className="d-flex flex-wrap justify-content-center">{posts.length > 0 ? posts.map((post) => <PostCard key={post.firebaseKey} postObj={post} />) : <p>No posts found for the selected tag.</p>}</div>;
+  return <div className="d-flex flex-wrap justify-content-center">{filteredPosts.length > 0 ? filteredPosts.map((post) => <PostCard key={post.firebaseKey} postObj={post} />) : <p>No posts found for the selected tag.</p>}</div>;
 }
 
 PostsByTag.propTypes = {

@@ -1,12 +1,22 @@
 'use client';
 
-import React from 'react';
-import { Navbar, Nav, Container, Offcanvas, Button } from 'react-bootstrap';
+import React, { useState, useContext } from 'react';
+import { Navbar, Nav, Container, Offcanvas, Button, Form, FormControl } from 'react-bootstrap';
 import { signOut } from '../utils/auth';
 import { useAuth } from '../utils/context/authContext';
+import { SearchContext } from '../utils/context/SearchContext'; // Import SearchContext
 
 function AppNavbar() {
   const { user } = useAuth();
+  const { setSearchQuery } = useContext(SearchContext); // Access the global search context
+  const [localQuery, setLocalQuery] = useState(''); // Local state for the search bar
+
+  const handleSearchChange = (e) => {
+    const query = e.target.value;
+    setLocalQuery(query);
+    setSearchQuery(query); // Update the global search query
+  };
+
   return (
     <Navbar expand={false} style={{ backgroundColor: '#343a40' }} variant="dark">
       <Container fluid>
@@ -27,6 +37,24 @@ function AppNavbar() {
           Aura
         </Navbar.Brand>
 
+        {/* Search Bar */}
+        <Form className="d-flex align-items-center me-3">
+          <FormControl
+            type="search"
+            placeholder="Search"
+            className="me-2"
+            value={localQuery}
+            onChange={handleSearchChange} // Update the global search query
+            style={{
+              backgroundColor: '#495057',
+              color: 'white',
+              border: 'none',
+              borderRadius: '4px',
+            }}
+          />
+        </Form>
+
+        {/* Sign Out Button */}
         <Button variant="outline-light" onClick={signOut} style={{ marginRight: '10px' }}>
           Sign Out
         </Button>
