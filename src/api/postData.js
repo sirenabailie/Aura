@@ -25,7 +25,7 @@ const createPost = (payload) =>
       body: JSON.stringify(payload),
     })
       .then((response) => response.json())
-      .then((data) => resolve(data))
+      .then(resolve)
       .catch(reject);
   });
 
@@ -71,14 +71,17 @@ const getSinglePost = (firebaseKey) =>
 
 const getPostsByTag = (tagId) =>
   new Promise((resolve, reject) => {
-    fetch(`${endpoint}/Posts.json?orderBy="tagId"&equalTo="${tagId}"`, {
+    fetch(`${endpoint}/Posts.json`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       },
     })
       .then((response) => response.json())
-      .then((data) => resolve(Object.values(data)))
+      .then((data) => {
+        const posts = Object.values(data).filter((post) => post.tags?.some((tag) => tagId.includes(tag)));
+        resolve(posts);
+      })
       .catch(reject);
   });
 
