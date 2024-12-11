@@ -16,7 +16,7 @@ import { useAuth } from '../utils/context/authContext';
 
 function PostCard({ postObj, onUpdate }) {
   const { user } = useAuth();
-  const [tagName, setTagName] = useState(null);
+  const [tags, setTags] = useState([]); // Store tag names
   const [isFavorite, setIsFavorite] = useState(postObj.favorite); // Initialize favorite state
   const router = useRouter();
 
@@ -47,12 +47,15 @@ function PostCard({ postObj, onUpdate }) {
   };
 
   useEffect(() => {
-    getTags().then((tags) => {
-      const matchingTag = tags.find((tag) => tag.firebaseKey === postObj.tagId);
-      if (matchingTag) {
-        setTagName(matchingTag.name);
-      }
-    });
+    if (postObj.tagId && postObj.tagId.length > 0) {
+      getTags().then((allTags) => {
+        const matchingTags = postObj.tagId.map((id) => {
+          const foundTag = allTags.find((tagItem) => tagItem.firebaseKey === id);
+          return foundTag ? { name: foundTag.name, id } : null;
+        });
+        setTags(matchingTags.filter((tagObj) => tagObj !== null)); // Filter out null values
+      });
+    }
   }, [postObj.tagId]);
 
   return (
@@ -69,7 +72,7 @@ function PostCard({ postObj, onUpdate }) {
       {postObj.images?.length > 0 ? (
         <Carousel interval={null} style={{ height: '400px' }}>
           {postObj.images.map((image) => (
-            <Carousel.Item key={crypto.randomUUID()}>
+            <Carousel.Item key={image}>
               <img
                 className="d-block w-100"
                 src={typeof image === 'string' ? image : image.url}
@@ -110,11 +113,19 @@ function PostCard({ postObj, onUpdate }) {
         <hr style={{ backgroundColor: 'white', height: '1px' }} />
         <h6>{postObj.content}</h6>
 
-        {tagName && (
+        {tags.length > 0 && (
           <div className="mt-3 text-center">
-            <Button variant="outline-light" href={`/tagStories/${postObj.tagId}`} className="badge" style={{ fontSize: '0.8rem' }}>
-              {tagName}
-            </Button>
+            {tags.map((tagObj) => (
+              <Button
+                key={tagObj.id} // Use tag ID as a unique key
+                variant="outline-light"
+                href={`/Posts/Tags/${tagObj.name}`}
+                className="badge mx-1"
+                style={{ fontSize: '0.8rem' }}
+              >
+                {tagObj.name}
+              </Button>
+            ))}
           </div>
         )}
 
@@ -199,7 +210,7 @@ PostCard.propTypes = {
     content: PropTypes.string,
     favorite: PropTypes.bool, // Add favorite to PropTypes
     firebaseKey: PropTypes.string.isRequired,
-    tagId: PropTypes.string,
+    tagId: PropTypes.arrayOf(PropTypes.string), // Multiple tags
     uid: PropTypes.string.isRequired,
   }).isRequired,
   onUpdate: PropTypes.func.isRequired,

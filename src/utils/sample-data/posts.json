@@ -7,9 +7,10 @@
         "https://i.pinimg.com/736x/e2/bc/43/e2bc43464034d7d12af3accd71bad104.jpg"
       ],
       "newImageUrl": "",
-      "tagId": "-NvOi_XxKFgQmbj4Wygx",
+      "tagId": ["-NvOi_XxKFgQmbj4Wygx", "-NvOi_ZxKLgQmbj6Wybx"],
       "title": "Books That Feel Like a Dream",
-      "uid": "8Ze6yAX2ElV1hColpYVKsTXr7fu2"
+      "uid": "8Ze6yAX2ElV1hColpYVKsTXr7fu2",
+      "favorite": false
     },
     "-ODiGMkt3xsETTTEY47G": {
       "content": "I want music that gives off a fierce and unapologetic energy—a mix of chaos, rebellion, and raw emotion. I’m looking for music that matches this vibe. Something with bold beats, sharp lyrics, or experimental sounds that push boundaries.",
@@ -18,8 +19,9 @@
         "https://i.pinimg.com/736x/da/30/5c/da305c6412051416059cd72352b87b77.jpg"
       ],
       "newImageUrl": "",
-      "tagId": "-NvOi_ZxKLgQmbj6Wybx",
+      "tagId": ["-NvOi_XxKFgQmbj4Wygx", "-NvOi_ZxKLgQmbj6Wybx"],
       "title": "Music That Feels Bold and Edgy",
-      "uid": "fV7toGaLpfa2ZZXAFbojcIjTN7S2"
+      "uid": "fV7toGaLpfa2ZZXAFbojcIjTN7S2",
+      "favorite": false 
     }
 }
