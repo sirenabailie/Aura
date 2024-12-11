@@ -14,7 +14,7 @@ import getTags from '../api/tagData';
 import { deletePost, toggleFavorite } from '../api/postData';
 import { useAuth } from '../utils/context/authContext';
 
-function PostCard({ postObj, onUpdate }) {
+function PostCard({ postObj, onUpdate, isUserProfile }) {
   const { user } = useAuth();
   const [tags, setTags] = useState([]); // Store tag names
   const [isFavorite, setIsFavorite] = useState(postObj.favorite); // Initialize favorite state
@@ -136,16 +136,9 @@ function PostCard({ postObj, onUpdate }) {
             View
           </Button>
 
-          {user?.uid === postObj.uid && (
-            <Dropdown
-              as={ButtonGroup}
-              className="dropdown-menu-right"
-              style={{
-                position: 'absolute',
-                bottom: '10px',
-                right: '10px',
-              }}
-            >
+          {/* Edit/Delete Dropdown (only on User Profile page) */}
+          {isUserProfile && (
+            <Dropdown as={ButtonGroup}>
               <Dropdown.Toggle
                 variant="dark"
                 style={{
@@ -208,12 +201,18 @@ PostCard.propTypes = {
     images: PropTypes.arrayOf(PropTypes.string),
     title: PropTypes.string,
     content: PropTypes.string,
-    favorite: PropTypes.bool, // Add favorite to PropTypes
+    favorite: PropTypes.bool,
     firebaseKey: PropTypes.string.isRequired,
     tagId: PropTypes.arrayOf(PropTypes.string), // Multiple tags
     uid: PropTypes.string.isRequired,
   }).isRequired,
-  onUpdate: PropTypes.func.isRequired,
+  onUpdate: PropTypes.func,
+  isUserProfile: PropTypes.bool, // Prop to indicate if this is on the user profile page
+};
+
+PostCard.defaultProps = {
+  onUpdate: null,
+  isUserProfile: false, // Default is false
 };
 
 export default PostCard;
