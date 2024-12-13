@@ -3,6 +3,8 @@
 import React, { useState } from 'react';
 import { Modal, Button, ListGroup, InputGroup, FormControl } from 'react-bootstrap';
 import PropTypes from 'prop-types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faComment, faEdit, faTrashCan } from '@fortawesome/free-regular-svg-icons';
 import { useAuth } from '../utils/context/authContext';
 
 function CommentBox({ postId, comments, onCreateComment, onEditComment, onDeleteComment }) {
@@ -51,61 +53,49 @@ function CommentBox({ postId, comments, onCreateComment, onEditComment, onDelete
   };
 
   return (
-    <div className="d-flex flex-column align-items-center">
-      {/* Center the "Show Recommendations" button */}
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center', // Vertically align if needed
-          width: '100%',
-          margin: '1rem 0', // Adds spacing above and below
-        }}
-      >
-        <Button variant="outline-secondary" onClick={() => setShowModal(true)}>
-          Show Recommendations
+    <div className="d-flex flex-column align-items-center comment-box">
+      <div className="rec-btn-container" style={{ textAlign: 'center', marginTop: '0px' }}>
+        <Button className="rec-btn" variant="outline-secondary" onClick={() => setShowModal(true)}>
+          <FontAwesomeIcon icon={faComment} size="lg" />
         </Button>
       </div>
 
       <Modal show={showModal} onHide={() => setShowModal(false)} centered>
         <Modal.Header closeButton>
-          <Modal.Title>Recommendations</Modal.Title>
+          <Modal.Title className="text-center w-100">Recommendations</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <ListGroup>
             {comments.map((comment) => (
               <ListGroup.Item key={comment.firebaseKey || comment.timestamp} className="d-flex justify-content-between align-items-center">
                 {editComment && editComment.firebaseKey === comment.firebaseKey ? (
-                  // Render edit mode for the comment being edited
                   <div className="w-100">
                     <InputGroup>
                       <FormControl value={editedContent} onChange={(e) => setEditedContent(e.target.value)} />
-                      <Button variant="success" onClick={handleSaveEdit}>
+                      <Button className="save-btn" onClick={handleSaveEdit}>
                         Save
                       </Button>
-                      <Button variant="secondary" onClick={handleCancelEdit}>
+                      <Button className="cancel-btn" onClick={handleCancelEdit}>
                         Cancel
                       </Button>
                     </InputGroup>
                   </div>
                 ) : (
-                  // Render regular comment view
                   <>
                     <div>
                       <span role="img" aria-label="user-icon">
-                        🌟
+                        <FontAwesomeIcon icon={faComment} size="sm" />
                       </span>{' '}
                       {comment.content || 'No content provided'}
                     </div>
                     <div>
-                      {/* Show edit/delete buttons only if the current user is the comment owner */}
                       {user?.uid === comment.uid && (
                         <>
-                          <Button variant="link" className="p-0 mx-2" onClick={() => handleEdit(comment)}>
-                            ✏️
+                          <Button className="comment-btn" onClick={() => handleEdit(comment)}>
+                            <FontAwesomeIcon icon={faEdit} size="sm" />
                           </Button>
-                          <Button variant="link" className="p-0 text-danger" onClick={() => onDeleteComment(comment)}>
-                            🗑️
+                          <Button className="comment-btn" onClick={() => onDeleteComment(comment)}>
+                            <FontAwesomeIcon icon={faTrashCan} size="sm" />
                           </Button>
                         </>
                       )}
@@ -118,13 +108,17 @@ function CommentBox({ postId, comments, onCreateComment, onEditComment, onDelete
 
           <InputGroup className="mt-3">
             <FormControl placeholder="Add your recommendation..." value={newComment} onChange={(e) => setNewComment(e.target.value)} />
-            <Button variant="dark" onClick={handleCreateComment} disabled={!newComment.trim()}>
+            <Button
+              className={`submit-btn ${!newComment.trim() ? 'placeholder' : ''}`} // Add 'placeholder' class if input is empty
+              onClick={handleCreateComment}
+              disabled={!newComment.trim()} // Disable button if input is empty
+            >
               Submit
             </Button>
           </InputGroup>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="outline-secondary" onClick={() => setShowModal(false)}>
+          <Button className="cancel-btn" onClick={() => setShowModal(false)}>
             Cancel
           </Button>
         </Modal.Footer>

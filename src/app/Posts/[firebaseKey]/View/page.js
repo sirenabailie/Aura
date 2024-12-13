@@ -38,55 +38,58 @@ function ViewPostPage() {
   };
 
   return (
-    <div className="view-post-page container d-flex flex-column align-items-center" style={{ textAlign: 'center' }}>
-      {post ? (
-        <div>
-          <h1 style={{ marginBottom: '20px' }}>{post.title}</h1>
+    <div className="view-page">
+      <div className="container d-flex flex-column align-items-center" style={{ textAlign: 'center', minHeight: 'calc(100vh - 20px)', paddingBottom: '20px' }}>
+        {post ? (
+          <div>
+            <h1 style={{ marginBottom: '20px' }}>{post.title}</h1>
+            {/* Carousel for multiple images */}
+            {post.images && post.images.length > 0 ? (
+              <Carousel interval={null} className="mb-3">
+                {post.images.map((url) => (
+                  <Carousel.Item key={url}>
+                    <img
+                      src={url}
+                      alt="Slide"
+                      className="d-block mx-auto"
+                      style={{
+                        width: '100%',
+                        maxWidth: '300px',
+                        height: '400px',
+                        objectFit: 'contain',
+                        borderRadius: '8px',
+                      }}
+                    />
+                  </Carousel.Item>
+                ))}
+              </Carousel>
+            ) : (
+              <p>No images available.</p>
+            )}
 
-          {/* Carousel for multiple images */}
-          {post.images && post.images.length > 0 ? (
-            <Carousel interval={null} className="mb-3">
-              {post.images.map((url) => (
-                <Carousel.Item key={url}>
-                  <img
-                    src={url}
-                    alt="Slide"
-                    className="d-block mx-auto"
-                    style={{
-                      width: '100%',
-                      maxWidth: '300px', // Reduce maximum width
-                      height: '400px', // Set a fixed height for consistent display
-                      objectFit: 'contain',
-                      borderRadius: '8px',
-                    }}
-                  />
-                </Carousel.Item>
-              ))}
-            </Carousel>
-          ) : (
-            <p>No images available.</p>
-          )}
+            <p className="view-content" style={{ marginBottom: '20px', maxWidth: '550px' }}>
+              {post.content}
+            </p>
+            <hr style={{ width: '100%', maxWidth: '600px', margin: '0px' }} />
 
-          <p style={{ marginBottom: '20px' }}>{post.content}</p>
-          <hr style={{ width: '100%', maxWidth: '600px', margin: '20px auto' }} />
-
-          {/* Centering the CommentBox */}
-          <div
-            style={{
-              width: '100%',
-              maxWidth: '600px',
-              margin: '20px auto', // Centers the entire CommentBox on the page
-              textAlign: 'center', // Ensures text alignment in case of block elements
-              display: 'flex',
-              justifyContent: 'center',
-            }}
-          >
-            <CommentBox postId={firebaseKey} comments={comments} onCreateComment={handleCreateComment} onEditComment={handleEditComment} onDeleteComment={handleDeleteComment} />
+            {/* Centering the CommentBox */}
+            <div
+              style={{
+                width: '100%',
+                maxWidth: '600px',
+                margin: '10px',
+                textAlign: 'center',
+                display: 'flex',
+                justifyContent: 'center',
+              }}
+            >
+              <CommentBox postId={firebaseKey} comments={comments} onCreateComment={handleCreateComment} onEditComment={handleEditComment} onDeleteComment={handleDeleteComment} />
+            </div>
           </div>
-        </div>
-      ) : (
-        <p>Loading post...</p>
-      )}
+        ) : (
+          <p>Loading post...</p>
+        )}
+      </div>
     </div>
   );
 }

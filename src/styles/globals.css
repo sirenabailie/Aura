@@ -1,9 +1,11 @@
-html,body {
-  height: 100%;
+html, body {
   margin: 0;
   padding: 0;
-  background-color: transparent; /* Optional: match the desired background color */
+  width: 100%;
+  height: 100%;
+  overflow-y: auto; 
 }
+
 
 .signInBtn {
   background-color: transparent;
@@ -33,14 +35,14 @@ html,body {
 .signOutBtn:active {
   background-color: transparent !important;
   color: rgb(220, 179, 181) !important;
-  box-shadow: none !important; /* Remove Bootstrap focus shadow */
-  outline: none !important; /* Remove default focus outline */
+  box-shadow: none !important; 
+  outline: none !important; 
 }
 
 .signOutBtn:focus {
   background-color: transparent !important;
-  box-shadow: none !important; /* Remove focus shadow */
-  outline: none !important; /* Remove focus outline */
+  box-shadow: none !important;
+  outline: none !important; 
 }
 
 .home-background {
@@ -48,16 +50,16 @@ html,body {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  min-height: 100vh; /* Full viewport height */
+  min-height: 100vh; 
   width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start; /* Align content to the top */
+  justify-content: flex-start; 
   align-items: center;
-  margin: 0; /* Remove any margins */
-  padding: 0; /* Remove padding */
-  box-sizing: border-box; /* Ensure padding/borders are included in calculations */
-  position: relative; /* Add this to manage navbar overlap */
+  margin: 0; 
+  padding: 0; 
+  box-sizing: border-box; 
+  position: relative; 
 }
 
 .home-card {
@@ -73,7 +75,7 @@ border: 1px solid rgba( 255, 255, 255, 0.18 )!important;
   position: fixed; /* Make navbar fixed so it doesn't affect the layout */
   top: 0;
   z-index: 1030; /* Ensure it stays above the content */
-  width: 100%; /* Ensure it spans the full width */
+  width: 100%; 
   background: rgba(64, 174, 185, 0.3);
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
   backdrop-filter: blur(10px);
@@ -144,35 +146,233 @@ border: 1px solid rgba( 255, 255, 255, 0.18 )!important;
   backdrop-filter: blur(10px); /* Apply the blur effect */
   -webkit-backdrop-filter: blur(10px); /* Blur for Safari */
   border-radius: 10px; /* Optional: Add rounded corners */
-  border: 1px solid rgba(255, 255, 255, 0.18); /* Match the navbar border */
-  color: white !important; /* Ensure the text color is white */
+  border: 1px solid rgba(255, 255, 255, 0.18); 
+  color: white !important; 
 }
 
 .offcanvas-backdrop {
-  background-color: rgba(0, 0, 0, 0.5) !important; /* Semi-transparent dark backdrop */
+  background-color: rgba(0, 0, 0, 0.5) !important; 
 }
 
 .offcanvas-header {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.18); /* Match the border style of navbar */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
 }
 
 .offcanvas-title {
-  color: white !important; /* Ensure the title is white */
+  color: white !important;
 }
 
 .offcanvas-body {
-  color: white !important; /* Ensure all text in the menu is white */
+  color: white !important; 
 }
 
 .offcanvas .nav-link {
-  color: white !important; /* Ensure all links are white */
+  color: white !important; 
   transition: color 0.3s ease-in-out;
 }
 
 .offcanvas .nav-link:hover {
-  color: #d0f0ff !important; /* Slightly lighter color on hover */
+  color: #d0f0ff !important;
 }
 
 .container {
   padding-top: 50px; /* Add padding to account for the fixed navbar height */
+}
+
+.view-page {
+  background-image: url('/images/auraBackground4.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  color: white;
+  min-height: 100vh; 
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; 
+  align-items: center;
+  margin: 0; 
+  padding: 0; 
+  box-sizing: border-box; 
+  position: relative; /* Add this to manage navbar overlap */
+  text-shadow: 2px 2px 4px rgb(1, 44, 56); 
+}
+
+.view-page h1 {
+  margin-top: 20px; /* Adjust margin below the navbar */
+}
+
+.view-content, p {
+  font-size: 1.2rem; 
+  line-height: 1.6;  
+}
+
+
+.rec-btn {
+  margin: 0; 
+  padding: 10px 20px;
+  background-color: transparent;
+  color: white;
+  border: 1px solid transparent; 
+  font-size: 1.2rem;
+  text-align: center;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  text-shadow: 2px 2px 4px rgba(1, 60, 77, 1); 
+}
+
+.rec-btn:hover {
+  background-color: transparent; 
+  color: rgb(233,204,200); 
+  border: 1px solid transparent; 
+}
+
+.rec-btn:active {
+  background-color: transparent!important;
+  border: none;
+}
+
+.rec-btn:focus {
+  background-color: trnasparent!important;
+  border: none;
+}
+
+.rec-btn-container {
+  margin-top: 0px; 
+}
+
+/* Modal Styling */
+.modal-content {
+  background: rgba(170, 247, 241, 0.483) !important; 
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37) !important; 
+  backdrop-filter: blur(10px); 
+  -webkit-backdrop-filter: blur(10px); 
+  border-radius: 10px; 
+  border: 1px solid rgba(255, 255, 255, 0.18); 
+  color: white !important; 
+}
+
+/* Modal Header */
+.modal-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18); 
+}
+
+.modal-title {
+  color: white; 
+  font-size: 1.5rem; 
+}
+
+/* Modal Body */
+.modal-body {
+  color: white; 
+  font-size: 1rem; 
+  line-height: 1.5; 
+}
+
+/* Input Fields in Modal */
+.modal-body .form-control {
+  background-color: rgba(255, 255, 255, 0.1); 
+  color: white; /* White text */
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.modal-body .form-control:focus {
+  background-color: rgba(255, 255, 255, 0.2); 
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.8); 
+  box-shadow: none; 
+}
+
+/* Modal Footer Buttons */
+.modal-footer .btn {
+  color: white;
+  background-color: rgba(255, 255, 255, 0.1); 
+  border: 1px solid rgba(255, 255, 255, 0.5); 
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.modal-footer .btn:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+  color: white;
+}
+
+.modal-footer .btn:focus,
+.modal-footer .btn:active {
+  background-color: rgba(255, 255, 255, 0.4);
+  color: white;
+  border: none;
+}
+
+.comment-btn {
+  color: black;
+  background-color: white;
+  border: none;
+}
+
+.comment-btn:hover {
+  background-color: white;
+  border: none;
+  color: black;
+}
+
+.comment-btn:focus,
+.comment-btn:active {
+  background-color: white!important; 
+  border: none;
+  color: black!important
+}
+
+.submit-btn {
+  color: white;
+  background-color: rgba(255, 255, 255, 0.1)!important;
+  border: none;
+  border: 1px solid rgba(255, 255, 255, 0.5)!important; 
+}
+
+.submit-btn:hover {
+  background-color: rgba(255, 255, 255, 0.3)!important; 
+  color: white;
+  border: none;
+}
+
+.submit-btn:focus,
+.submit-btn:active {
+  background-color: rgba(255, 255, 255, 0.4)!important; 
+  color: white;
+  border: none;
+}
+
+.submit-btn.placeholder {
+  background-color: rgba(255, 255, 255, 0.8); 
+  color: white; 
+  border: 1px solid rgba(255, 255, 255, 0.5); 
+}
+
+.form-control::placeholder {
+  color: rgba(255, 255, 255, 0.8); 
+  opacity: 1; 
+}
+
+.form-control:focus::placeholder {
+  color: rgba(255, 255, 255, 0.8); 
+}
+
+.save-btn {
+  color: black;
+  background-color: rgba(255, 255, 255, 0.1)!important;
+  border: none;
+  border: 1px solid rgba(255, 255, 255, 0.5)!important;
+}
+
+.save-btn:hover {
+  color: black;
+}
+
+.cancel-btn {
+  background-color: rgb(114, 186, 180, 0.8);
+  border: none;
+}
+
+.cancel-btn:hover {
+  background-color: rgb(114, 186, 180, 0.6);
 }
