@@ -1,4 +1,106 @@
 body {
-  background: #212529;
-  color: #ffffff;
+  margin: 0;
+  padding: 0;
+  background-color: transparent; /* Optional: match the desired background color */
+}
+
+.signInBtn {
+  background-color: transparent;
+  border: none;
+}
+
+.signInBtn:hover {
+  background-color: transparent;
+  color: rgb(124, 217, 219);
+}
+
+.signInBtn:active {
+  background-color: transparent!important;
+  color: rgb(124, 217, 219)!important;
+}
+
+.home-background {
+  background-image: url('/images/retroheadphones.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  min-height: 100vh; /* Full viewport height */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Start content from the top */
+  align-items: center;
+  margin-top: -70px; /* Offset for the navbar height (adjust based on your navbar's height) */
+  padding-top: 70px; /* Add padding to prevent content from going under the navbar */
+}
+
+
+.home-card {
+  background: rgba( 64, 174, 185, 0.3 )!important;
+box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 )!important;
+backdrop-filter: blur( 12px )!important;
+-webkit-backdrop-filter: blur( 0px )!important;
+border-radius: 10px!important;
+border: 1px solid rgba( 255, 255, 255, 0.18 )!important;
+}
+
+.custom-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1030; /* Keeps it above other elements */
+  background: rgba(64, 174, 185, 0.3);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.custom-hamburger {
+  background-color: transparent !important; /* Transparent background */
+  border: 1px solid transparent !important; /* Transparent border */
+  border-radius: 4px; /* Optional: rounded corners */
+  padding: 6px; /* Add some spacing inside the button */
+  width: 40px; /* Adjust width if necessary */
+  height: 40px; /* Adjust height for alignment */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-hamburger:focus,
+.custom-hamburger:active {
+  outline: none !important; /* Remove default browser outline */
+  border: 1px solid transparent !important; /* Keep the border transparent */
+  box-shadow: none !important; /* Remove any additional focus shadows */
+}
+
+.custom-hamburger:focus-visible {
+  outline: none !important; /* Remove focus-visible styles for browsers that support it */
+}
+
+.custom-hamburger .navbar-toggler-icon {
+  background-image: none !important; /* Remove Bootstrap default background */
+  background-color: white !important; /* Middle line */
+  position: relative;
+  width: 24px; /* Set the width of the hamburger */
+  height: 2px; /* Thickness of the middle line */
+}
+
+.custom-hamburger .navbar-toggler-icon::before,
+.custom-hamburger .navbar-toggler-icon::after {
+  content: '';
+  position: absolute;
+  width: 100%; /* Match the width of the hamburger */
+  height: 2px; /* Thickness of the lines */
+  background-color: white; /* Set the line color to white */
+  left: 0; /* Align lines to the left */
+}
+
+.custom-hamburger .navbar-toggler-icon::before {
+  top: -8px; /* Position the first line */
+}
+
+.custom-hamburger .navbar-toggler-icon::after {
+  bottom: -8px; /* Position the third line */
 }

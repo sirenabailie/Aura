@@ -1,22 +1,45 @@
+'use client';
+
 import React from 'react';
+import Image from 'next/image';
 import { Button } from 'react-bootstrap';
 import { signIn } from '../utils/auth';
 
 function Signin() {
   return (
     <div
-      className="text-center d-flex flex-column justify-content-center align-content-center"
       style={{
-        height: '90vh',
-        padding: '30px',
-        maxWidth: '400px',
-        margin: '0 auto',
+        height: '100vh',
+        width: '100vw',
+        position: 'relative',
       }}
     >
-      <h1>Aura</h1>
-      <Button variant="outline-light" type="button" size="lg" className="copy-btn" onClick={signIn}>
-        Sign In
-      </Button>
+      {/* Optimized Background Image */}
+      <Image
+        src="/images/auralogo11expandhighrescanva.png"
+        alt="Aura Background"
+        layout="fill"
+        objectFit="cover"
+        quality={100} // High quality for sharpness
+        priority // Ensures image loads quickly
+      />
+
+      {/* Content */}
+      <div
+        style={{
+          position: 'fixed',
+          top: '75%',
+          left: '58%',
+          transform: 'translate(-50%, -50%)',
+          backgroundColor: 'transparent', // Adds readability
+          textAlign: 'center',
+          color: 'white',
+        }}
+      >
+        <Button className="signInBtn" variant="outline-light" size="lg" onClick={signIn}>
+          Sign In
+        </Button>
+      </div>
     </div>
   );
 }

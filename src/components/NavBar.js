@@ -2,6 +2,8 @@
 
 import React, { useState, useContext } from 'react';
 import { Navbar, Nav, Container, Offcanvas, Button, Form, FormControl } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { signOut } from '../utils/auth';
 import { useAuth } from '../utils/context/authContext';
 import { SearchContext } from '../utils/context/SearchContext'; // Import SearchContext
@@ -18,10 +20,10 @@ function AppNavbar() {
   };
 
   return (
-    <Navbar expand={false} style={{ backgroundColor: '#343a40' }} variant="dark">
+    <Navbar expand={false} className="custom-navbar" variant="light">
       <Container fluid>
         {/* Hamburger Menu */}
-        <Navbar.Toggle aria-controls="offcanvasNavbar" className="me-auto" style={{ marginLeft: '10px' }} />
+        <Navbar.Toggle aria-controls="offcanvasNavbar" className="me-auto custom-hamburger" style={{ marginLeft: '10px' }} />
 
         {/* Centered Brand */}
         <Navbar.Brand
@@ -38,18 +40,32 @@ function AppNavbar() {
         </Navbar.Brand>
 
         {/* Search Bar */}
-        <Form className="d-flex align-items-center me-3">
+        <Form className="d-flex align-items-center me-3" style={{ position: 'relative', width: '200px' }}>
+          {/* FontAwesome Icon */}
+          <span
+            style={{
+              position: 'absolute',
+              top: '50%',
+              left: '10px',
+              transform: 'translateY(-50%)',
+              color: 'white',
+              pointerEvents: 'none',
+            }}
+          >
+            <FontAwesomeIcon icon={faMagnifyingGlass} />
+          </span>
+
+          {/* FormControl Input */}
           <FormControl
             type="search"
-            placeholder="Search"
-            className="me-2"
             value={localQuery}
             onChange={handleSearchChange} // Update the global search query
             style={{
-              backgroundColor: '#495057',
+              backgroundColor: 'transparent',
               color: 'white',
-              border: 'none',
+              border: '1px solid white',
               borderRadius: '4px',
+              paddingLeft: '30px', // Add padding to the left to account for the icon
             }}
           />
         </Form>
@@ -60,7 +76,7 @@ function AppNavbar() {
         </Button>
 
         {/* Hamburger Menu Content */}
-        <Navbar.Offcanvas id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel" placement="start" style={{ backgroundColor: '#343a40', color: 'white' }}>
+        <Navbar.Offcanvas id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel" placement="start" style={{ backgroundColor: 'rgba(64, 174, 185, 0.3)', color: 'white' }}>
           <Offcanvas.Header closeButton>
             <Offcanvas.Title id="offcanvasNavbarLabel" style={{ color: 'white' }}>
               Menu
@@ -74,7 +90,6 @@ function AppNavbar() {
               <Nav.Link href="/Posts/New" className="text-light">
                 Add Request
               </Nav.Link>
-              {/* Updated Links for Dynamic Routing */}
               <Nav.Link href="/Posts/Tags/Movies" className="text-light">
                 Movies
               </Nav.Link>

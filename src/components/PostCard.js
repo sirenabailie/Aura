@@ -14,13 +14,13 @@ import getTags from '../api/tagData';
 import { deletePost, toggleFavorite } from '../api/postData';
 import { useAuth } from '../utils/context/authContext';
 
-function PostCard({ postObj, onUpdate, isUserProfile }) {
+function PostCard({ postObj, onUpdate, isUserProfile, customClass }) {
   const { user } = useAuth();
   const [tags, setTags] = useState([]); // Store tag names
   const [isFavorite, setIsFavorite] = useState(postObj.favorite); // Initialize favorite state
   const router = useRouter();
 
-  // Synchronize `isFavorite` state with `postObj.favorite` prop
+  // Sync `isFavorite` state with `postObj.favorite` prop
   useEffect(() => {
     setIsFavorite(postObj.favorite);
   }, [postObj.favorite]);
@@ -47,7 +47,7 @@ function PostCard({ postObj, onUpdate, isUserProfile }) {
   };
 
   useEffect(() => {
-    if (postObj.tagId && postObj.tagId.length > 0) {
+    if (postObj.tagId?.length > 0) {
       getTags().then((allTags) => {
         const matchingTags = postObj.tagId.map((id) => {
           const foundTag = allTags.find((tagItem) => tagItem.firebaseKey === id);
@@ -60,7 +60,7 @@ function PostCard({ postObj, onUpdate, isUserProfile }) {
 
   return (
     <Card
-      className="card"
+      className={`card ${customClass}`} // Apply the custom class
       style={{
         width: '18rem',
         margin: '10px',
@@ -113,24 +113,19 @@ function PostCard({ postObj, onUpdate, isUserProfile }) {
         <hr style={{ backgroundColor: 'white', height: '1px' }} />
         <h6>{postObj.content}</h6>
 
+        {/* Tags */}
         {tags.length > 0 && (
           <div className="mt-3 text-center">
             {tags.map((tagObj) => (
-              <Button
-                key={tagObj.id} // Use tag ID as a unique key
-                variant="outline-light"
-                href={`/Posts/Tags/${tagObj.name}`}
-                className="badge mx-1"
-                style={{ fontSize: '0.8rem' }}
-              >
+              <Button key={tagObj.id} variant="outline-light" href={`/Posts/Tags/${tagObj.name}`} className="badge mx-1" style={{ fontSize: '0.8rem' }}>
                 {tagObj.name}
               </Button>
             ))}
           </div>
         )}
 
+        {/* View Button */}
         <div className="mt-3 d-flex justify-content-between">
-          {/* View Button */}
           <Button variant="outline-light" onClick={() => handleView(postObj.firebaseKey)} style={{ fontSize: '0.8rem' }}>
             <FontAwesomeIcon icon={faEye} className="me-2" />
             View
@@ -208,11 +203,13 @@ PostCard.propTypes = {
   }).isRequired,
   onUpdate: PropTypes.func,
   isUserProfile: PropTypes.bool, // Prop to indicate if this is on the user profile page
+  customClass: PropTypes.string, // Custom class for styling
 };
 
 PostCard.defaultProps = {
   onUpdate: null,
   isUserProfile: false, // Default is false
+  customClass: '', // Default empty class
 };
 
 export default PostCard;
