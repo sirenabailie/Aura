@@ -1,4 +1,5 @@
-body {
+html,body {
+  height: 100%;
   margin: 0;
   padding: 0;
   background-color: transparent; /* Optional: match the desired background color */
@@ -19,6 +20,29 @@ body {
   color: rgb(124, 217, 219)!important;
 }
 
+.signOutBtn {
+  background-color: transparent;
+  border: none;
+}
+
+.signOutBtn:hover {
+  background-color: transparent;
+  color: rgb(220, 179, 181);
+}
+
+.signOutBtn:active {
+  background-color: transparent !important;
+  color: rgb(220, 179, 181) !important;
+  box-shadow: none !important; /* Remove Bootstrap focus shadow */
+  outline: none !important; /* Remove default focus outline */
+}
+
+.signOutBtn:focus {
+  background-color: transparent !important;
+  box-shadow: none !important; /* Remove focus shadow */
+  outline: none !important; /* Remove focus outline */
+}
+
 .home-background {
   background-image: url('/images/retroheadphones.png');
   background-size: cover;
@@ -28,12 +52,13 @@ body {
   width: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start; /* Start content from the top */
+  justify-content: flex-start; /* Align content to the top */
   align-items: center;
-  margin-top: -70px; /* Offset for the navbar height (adjust based on your navbar's height) */
-  padding-top: 70px; /* Add padding to prevent content from going under the navbar */
+  margin: 0; /* Remove any margins */
+  padding: 0; /* Remove padding */
+  box-sizing: border-box; /* Ensure padding/borders are included in calculations */
+  position: relative; /* Add this to manage navbar overlap */
 }
-
 
 .home-card {
   background: rgba( 64, 174, 185, 0.3 )!important;
@@ -45,9 +70,10 @@ border: 1px solid rgba( 255, 255, 255, 0.18 )!important;
 }
 
 .custom-navbar {
-  position: sticky;
+  position: fixed; /* Make navbar fixed so it doesn't affect the layout */
   top: 0;
-  z-index: 1030; /* Keeps it above other elements */
+  z-index: 1030; /* Ensure it stays above the content */
+  width: 100%; /* Ensure it spans the full width */
   background: rgba(64, 174, 185, 0.3);
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
   backdrop-filter: blur(10px);
@@ -55,6 +81,13 @@ border: 1px solid rgba( 255, 255, 255, 0.18 )!important;
   border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.18);
 }
+
+.custom-search-bar:focus {
+  outline: none !important; 
+  box-shadow: none !important; 
+  border: 1px solid white;
+}
+
 
 .custom-hamburger {
   background-color: transparent !important; /* Transparent background */
@@ -103,4 +136,43 @@ border: 1px solid rgba( 255, 255, 255, 0.18 )!important;
 
 .custom-hamburger .navbar-toggler-icon::after {
   bottom: -8px; /* Position the third line */
+}
+
+.offcanvas {
+  background: rgb(174,187,189, 0.3) !important; /* Same translucent blue background as navbar */
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37) !important; /* Match the shadow of the navbar */
+  backdrop-filter: blur(10px); /* Apply the blur effect */
+  -webkit-backdrop-filter: blur(10px); /* Blur for Safari */
+  border-radius: 10px; /* Optional: Add rounded corners */
+  border: 1px solid rgba(255, 255, 255, 0.18); /* Match the navbar border */
+  color: white !important; /* Ensure the text color is white */
+}
+
+.offcanvas-backdrop {
+  background-color: rgba(0, 0, 0, 0.5) !important; /* Semi-transparent dark backdrop */
+}
+
+.offcanvas-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18); /* Match the border style of navbar */
+}
+
+.offcanvas-title {
+  color: white !important; /* Ensure the title is white */
+}
+
+.offcanvas-body {
+  color: white !important; /* Ensure all text in the menu is white */
+}
+
+.offcanvas .nav-link {
+  color: white !important; /* Ensure all links are white */
+  transition: color 0.3s ease-in-out;
+}
+
+.offcanvas .nav-link:hover {
+  color: #d0f0ff !important; /* Slightly lighter color on hover */
+}
+
+.container {
+  padding-top: 50px; /* Add padding to account for the fixed navbar height */
 }

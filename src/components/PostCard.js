@@ -97,94 +97,103 @@ function PostCard({ postObj, onUpdate, isUserProfile, customClass }) {
         />
       )}
 
-      <Card.Body style={{ position: 'relative', paddingBottom: '50px' }}>
-        <Card.Title>
-          {postObj.title}
-          <FontAwesomeIcon
-            icon={isFavorite ? solidStar : regularStar} // Toggle between filled and empty star
-            onClick={handleFavoriteClick}
-            style={{
-              cursor: 'pointer',
-              marginLeft: '10px',
-              color: isFavorite ? 'gold' : 'white', // Highlight gold if favorited
-            }}
-          />
-        </Card.Title>
-        <hr style={{ backgroundColor: 'white', height: '1px' }} />
-        <h6>{postObj.content}</h6>
+      <Card.Body
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+          height: '100%',
+          padding: '20px', // Adjust padding if needed
+        }}
+      >
+        {/* Card Content */}
+        <div className="text-center">
+          <Card.Title>{postObj.title}</Card.Title>
+        </div>
 
-        {/* Tags */}
-        {tags.length > 0 && (
-          <div className="mt-3 text-center">
-            {tags.map((tagObj) => (
-              <Button key={tagObj.id} variant="outline-light" href={`/Posts/Tags/${tagObj.name}`} className="badge mx-1" style={{ fontSize: '0.8rem' }}>
-                {tagObj.name}
-              </Button>
-            ))}
-          </div>
-        )}
-
-        {/* View Button */}
-        <div className="mt-3 d-flex justify-content-between">
-          <Button variant="outline-light" onClick={() => handleView(postObj.firebaseKey)} style={{ fontSize: '0.8rem' }}>
-            <FontAwesomeIcon icon={faEye} className="me-2" />
-            View
-          </Button>
-
-          {/* Edit/Delete Dropdown (only on User Profile page) */}
-          {isUserProfile && (
-            <Dropdown as={ButtonGroup}>
-              <Dropdown.Toggle
-                variant="dark"
-                style={{
-                  background: 'none',
-                  border: 'none',
-                  color: 'white',
-                  padding: '0',
-                }}
-              >
-                <FontAwesomeIcon icon={faEllipsisH} style={{ fontSize: '24px' }} />
-              </Dropdown.Toggle>
-
-              <Dropdown.Menu
-                style={{
-                  backgroundColor: 'rgba(52, 58, 64, 0.9)',
-                  border: 'none',
-                  textAlign: 'left',
-                  boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
-                }}
-              >
-                <Dropdown.Item
-                  as="button"
-                  className="d-flex align-items-center"
-                  style={{
-                    padding: '0.5rem',
-                    color: 'white',
-                    backgroundColor: 'transparent',
-                    border: 'none',
-                  }}
-                  onClick={() => handleEdit(postObj.firebaseKey)}
-                >
-                  <FontAwesomeIcon icon={faPenToSquare} className="me-2" />
-                  Edit
-                </Dropdown.Item>
-                <Dropdown.Item
-                  as="button"
-                  className="d-flex align-items-center"
-                  style={{
-                    padding: '0.5rem',
-                    color: 'white',
-                    backgroundColor: 'transparent',
-                    border: 'none',
-                  }}
-                  onClick={deleteThisPost}
-                >
-                  <FontAwesomeIcon icon={faTrashCan} className="me-2" />
-                  Delete
-                </Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
+        {/* Tags and Buttons */}
+        <div>
+          {tags.length > 0 && (
+            <div className="mt-3 text-center">
+              {tags.map((tagObj) => (
+                <Button key={tagObj.id} variant="outline-light" href={`/Posts/Tags/${tagObj.name}`} className="badge mx-1" style={{ fontSize: '0.8rem' }}>
+                  {tagObj.name}
+                </Button>
+              ))}
+            </div>
           )}
+          <div className="mt-3 d-flex justify-content-between align-items-center">
+            {/* View Button */}
+            <Button variant="outline-light" onClick={() => handleView(postObj.firebaseKey)} style={{ fontSize: '0.8rem' }}>
+              <FontAwesomeIcon icon={faEye} className="me-2" />
+              View
+            </Button>
+
+            {/* Favorite Button */}
+            <FontAwesomeIcon
+              icon={isFavorite ? solidStar : regularStar}
+              onClick={handleFavoriteClick}
+              style={{
+                cursor: 'pointer',
+                color: isFavorite ? '5F9DB7' : 'white',
+                fontSize: '1.5rem', // Adjust size if needed
+              }}
+            />
+
+            {/* Edit/Delete Dropdown (only on User Profile page) */}
+            {isUserProfile && (
+              <Dropdown as={ButtonGroup}>
+                <Dropdown.Toggle
+                  variant="dark"
+                  style={{
+                    background: 'none',
+                    border: 'none',
+                    color: 'white',
+                    padding: '0',
+                  }}
+                >
+                  <FontAwesomeIcon icon={faEllipsisH} style={{ fontSize: '24px' }} />
+                </Dropdown.Toggle>
+                <Dropdown.Menu
+                  style={{
+                    backgroundColor: 'rgba(52, 58, 64, 0.9)',
+                    border: 'none',
+                    textAlign: 'left',
+                    boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
+                  }}
+                >
+                  <Dropdown.Item
+                    as="button"
+                    className="d-flex align-items-center"
+                    style={{
+                      padding: '0.5rem',
+                      color: 'white',
+                      backgroundColor: 'transparent',
+                      border: 'none',
+                    }}
+                    onClick={() => handleEdit(postObj.firebaseKey)}
+                  >
+                    <FontAwesomeIcon icon={faPenToSquare} className="me-2" />
+                    Edit
+                  </Dropdown.Item>
+                  <Dropdown.Item
+                    as="button"
+                    className="d-flex align-items-center"
+                    style={{
+                      padding: '0.5rem',
+                      color: 'white',
+                      backgroundColor: 'transparent',
+                      border: 'none',
+                    }}
+                    onClick={deleteThisPost}
+                  >
+                    <FontAwesomeIcon icon={faTrashCan} className="me-2" />
+                    Delete
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            )}
+          </div>
         </div>
       </Card.Body>
     </Card>

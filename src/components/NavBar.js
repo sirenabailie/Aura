@@ -60,6 +60,7 @@ function AppNavbar() {
             type="search"
             value={localQuery}
             onChange={handleSearchChange} // Update the global search query
+            className="custom-search-bar"
             style={{
               backgroundColor: 'transparent',
               color: 'white',
@@ -71,7 +72,7 @@ function AppNavbar() {
         </Form>
 
         {/* Sign Out Button */}
-        <Button variant="outline-light" onClick={signOut} style={{ marginRight: '10px' }}>
+        <Button className="signOutBtn" onClick={signOut} style={{ marginRight: '10px' }}>
           Sign Out
         </Button>
 
