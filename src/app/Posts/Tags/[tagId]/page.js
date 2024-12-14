@@ -16,8 +16,13 @@ function PostsByTagPage() {
   const { tagId } = useParams(); // Dynamically get the tag from the URL
   const firebaseTagId = tagMapping[tagId]; // Map to Firebase tagId
 
+  // Generate a dynamic class name based on the tag
+  const pageClass = `tag-page-${tagId?.toLowerCase()}`;
+
   return (
-    <div>
+    <div className={pageClass}>
+      {' '}
+      {/* Apply the dynamic class */}
       <h1 className="text-center mt-4">{tagId}</h1>
       {firebaseTagId ? <PostsByTag tagId={firebaseTagId} /> : <p>Invalid tag selected.</p>}
     </div>
