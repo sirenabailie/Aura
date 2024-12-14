@@ -41,7 +41,7 @@ function ViewPostPage() {
     <div className="view-page">
       <div className="container d-flex flex-column align-items-center" style={{ textAlign: 'center', minHeight: 'calc(100vh - 20px)', paddingBottom: '20px' }}>
         {post ? (
-          <div>
+          <div className="move-content">
             <h1 style={{ marginBottom: '20px' }}>{post.title}</h1>
             {/* Carousel for multiple images */}
             {post.images && post.images.length > 0 ? (
@@ -67,23 +67,26 @@ function ViewPostPage() {
               <p>No images available.</p>
             )}
 
-            <p className="view-content" style={{ marginBottom: '20px', maxWidth: '550px' }}>
-              {post.content}
-            </p>
-            <hr style={{ width: '100%', maxWidth: '600px', margin: '0px' }} />
+            {/* Wrapping the elements below the carousel */}
+            <div className="post-details" style={{ width: '100%', maxWidth: '600px', margin: '10px auto' }}>
+              <p className="view-content" style={{ marginBottom: '20px', maxWidth: '550px' }}>
+                {post.content}
+              </p>
+              <hr style={{ width: '100%', maxWidth: '600px', margin: '0px' }} />
 
-            {/* Centering the CommentBox */}
-            <div
-              style={{
-                width: '100%',
-                maxWidth: '600px',
-                margin: '10px',
-                textAlign: 'center',
-                display: 'flex',
-                justifyContent: 'center',
-              }}
-            >
-              <CommentBox postId={firebaseKey} comments={comments} onCreateComment={handleCreateComment} onEditComment={handleEditComment} onDeleteComment={handleDeleteComment} />
+              {/* Centering the CommentBox */}
+              <div
+                style={{
+                  width: '100%',
+                  maxWidth: '600px',
+                  marginTop: '10px',
+                  textAlign: 'center',
+                  display: 'flex',
+                  justifyContent: 'center',
+                }}
+              >
+                <CommentBox postId={firebaseKey} comments={comments} onCreateComment={handleCreateComment} onEditComment={handleEditComment} onDeleteComment={handleDeleteComment} />
+              </div>
             </div>
           </div>
         ) : (

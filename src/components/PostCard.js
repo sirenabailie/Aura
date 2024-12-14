@@ -62,15 +62,17 @@ function PostCard({ postObj, onUpdate, isUserProfile, customClass }) {
     <Card
       className={`card ${customClass}`} // Apply the custom class
       style={{
-        width: '18rem',
+        width: '16rem', // Reduce width
         margin: '10px',
         backgroundColor: '#343a40',
         color: 'white',
+        borderRadius: '10px', // Rounded corners
+        overflow: 'hidden', // Ensure content respects rounded corners
       }}
     >
       {/* Image Carousel */}
       {postObj.images?.length > 0 ? (
-        <Carousel interval={null} style={{ height: '400px' }}>
+        <Carousel interval={null} style={{ height: '200px' }}>
           {postObj.images.map((image) => (
             <Carousel.Item key={image}>
               <img
@@ -78,8 +80,9 @@ function PostCard({ postObj, onUpdate, isUserProfile, customClass }) {
                 src={typeof image === 'string' ? image : image.url}
                 alt="Slide"
                 style={{
-                  height: '400px',
+                  height: '200px', // Adjust image height for smaller cards
                   objectFit: 'cover',
+                  borderRadius: '10px 10px 0 0', // Match top rounded corners
                 }}
               />
             </Carousel.Item>
@@ -91,8 +94,9 @@ function PostCard({ postObj, onUpdate, isUserProfile, customClass }) {
           src="/fallback-image.jpg" // Replace with a default image
           alt={postObj.title}
           style={{
-            height: '400px',
+            height: '200px',
             objectFit: 'cover',
+            borderRadius: '10px 10px 0 0', // Match top rounded corners
           }}
         />
       )}
@@ -103,12 +107,12 @@ function PostCard({ postObj, onUpdate, isUserProfile, customClass }) {
           flexDirection: 'column',
           justifyContent: 'space-between',
           height: '100%',
-          padding: '20px', // Adjust padding if needed
+          padding: '15px', // Adjust padding for smaller cards
         }}
       >
         {/* Card Content */}
         <div className="text-center">
-          <Card.Title>{postObj.title}</Card.Title>
+          <Card.Title style={{ fontSize: '1rem' }}>{postObj.title}</Card.Title> {/* Adjust title size */}
         </div>
 
         {/* Tags and Buttons */}
@@ -116,7 +120,13 @@ function PostCard({ postObj, onUpdate, isUserProfile, customClass }) {
           {tags.length > 0 && (
             <div className="mt-3 text-center">
               {tags.map((tagObj) => (
-                <Button key={tagObj.id} variant="outline-light" href={`/Posts/Tags/${tagObj.name}`} className="badge mx-1" style={{ fontSize: '0.8rem' }}>
+                <Button
+                  key={tagObj.id}
+                  variant="outline-light"
+                  href={`/Posts/Tags/${tagObj.name}`}
+                  className="badge mx-1"
+                  style={{ fontSize: '0.7rem' }} // Adjust tag font size for smaller cards
+                >
                   {tagObj.name}
                 </Button>
               ))}
@@ -124,7 +134,11 @@ function PostCard({ postObj, onUpdate, isUserProfile, customClass }) {
           )}
           <div className="mt-3 d-flex justify-content-between align-items-center">
             {/* View Button */}
-            <Button variant="outline-light" onClick={() => handleView(postObj.firebaseKey)} style={{ fontSize: '0.8rem' }}>
+            <Button
+              variant="outline-light"
+              onClick={() => handleView(postObj.firebaseKey)}
+              style={{ fontSize: '0.7rem' }} // Smaller button size
+            >
               <FontAwesomeIcon icon={faEye} className="me-2" />
               View
             </Button>
@@ -135,12 +149,12 @@ function PostCard({ postObj, onUpdate, isUserProfile, customClass }) {
               onClick={handleFavoriteClick}
               style={{
                 cursor: 'pointer',
-                color: isFavorite ? '5F9DB7' : 'white',
-                fontSize: '1.5rem', // Adjust size if needed
+                color: isFavorite ? 'rgb(238, 187, 226)' : 'white',
+                fontSize: '1.2rem', // Adjust size for smaller cards
               }}
             />
 
-            {/* Edit/Delete Dropdown (only on User Profile page) */}
+            {/* Edit/Delete Dropdown */}
             {isUserProfile && (
               <Dropdown as={ButtonGroup}>
                 <Dropdown.Toggle
@@ -152,7 +166,7 @@ function PostCard({ postObj, onUpdate, isUserProfile, customClass }) {
                     padding: '0',
                   }}
                 >
-                  <FontAwesomeIcon icon={faEllipsisH} style={{ fontSize: '24px' }} />
+                  <FontAwesomeIcon icon={faEllipsisH} style={{ fontSize: '20px' }} />
                 </Dropdown.Toggle>
                 <Dropdown.Menu
                   style={{

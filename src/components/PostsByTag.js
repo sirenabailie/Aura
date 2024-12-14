@@ -16,9 +16,7 @@ function PostsByTag({ tagId }) {
   const getPostsByTag = () => {
     setLoading(true);
     getPosts().then((allPosts) => {
-      const tagPosts = allPosts.filter(
-        (post) => post.tagId?.includes(tagId), // Filter posts that match the current tag
-      );
+      const tagPosts = allPosts.filter((post) => post.tagId?.includes(tagId)); // Filter posts that match the current tag
       setPosts(tagPosts);
       setFilteredPosts(tagPosts); // Initially, display all posts for the tag
       setLoading(false);
@@ -40,11 +38,33 @@ function PostsByTag({ tagId }) {
     getPostsByTag();
   }, [tagId]);
 
+  // Determine the CSS class for the tag page
+  const getTagPageClass = () => {
+    switch (tagId) {
+      case 'Movies':
+        return 'tag-page-movies';
+      case 'Shows':
+        return 'tag-page-shows';
+      case 'Books':
+        return 'tag-page-books';
+      case 'Music':
+        return 'tag-page-music';
+      case 'Podcasts':
+        return 'tag-page-podcasts';
+      default:
+        return 'tag-page-default'; // Fallback class
+    }
+  };
+
   if (loading) {
     return <p>Loading posts...</p>;
   }
 
-  return <div className="d-flex flex-wrap justify-content-center">{filteredPosts.length > 0 ? filteredPosts.map((post) => <PostCard key={post.firebaseKey} postObj={post} />) : <p>No posts found for the selected tag.</p>}</div>;
+  return (
+    <div className={getTagPageClass()}>
+      <div className="d-flex flex-wrap justify-content-center">{filteredPosts.length > 0 ? filteredPosts.map((post) => <PostCard key={post.firebaseKey} postObj={post} />) : <p>No posts found for the selected tag.</p>}</div>
+    </div>
+  );
 }
 
 PostsByTag.propTypes = {

@@ -60,31 +60,36 @@ function UserProfilePage() {
   };
 
   return (
-    <div className="container my-4 user-page">
-      {/* Favorites Section */}
-      <div className="favorite-posts">
-        <h2 className="text-center mb-3">Favorites</h2>
-        <div className="d-flex flex-wrap justify-content-center">{filteredFavoritePosts.length > 0 ? filteredFavoritePosts.map((post) => <PostCard key={post.firebaseKey} postObj={post} onUpdate={refreshPosts} />) : <p className="text-center">{searchQuery.trim() ? `No favorite posts found for "${searchQuery}".` : 'You have not favorited any posts yet.'}</p>}</div>
-      </div>
+    <div className="user-page">
+      {' '}
+      {/* Wrapping container with user-page class */}
+      <div className="container my-4">
+        {/* Favorites Section */}
+        <div className="favorite-posts">
+          <h2 className="text-center mb-3">Favorites</h2>
+          <div className="d-flex flex-wrap justify-content-center">{filteredFavoritePosts.length > 0 ? filteredFavoritePosts.map((post) => <PostCard key={post.firebaseKey} postObj={post} onUpdate={refreshPosts} customClass="fav-card" />) : <p className="text-center">{searchQuery.trim() ? `No favorite posts found for "${searchQuery}".` : 'You have not favorited any posts yet.'}</p>}</div>
+        </div>
 
-      <hr className="my-5" />
+        <hr className="my-5" />
 
-      {/* User's Posts Section */}
-      <div className="user-posts">
-        <h2 className="text-center mb-3">Your Posts</h2>
-        <div className="d-flex flex-wrap justify-content-center">
-          {filteredUserPosts.length > 0 ? (
-            filteredUserPosts.map((post) => (
-              <PostCard
-                key={post.firebaseKey}
-                postObj={post}
-                onUpdate={refreshPosts}
-                isUserProfile // Pass this prop to enable edit/delete buttons
-              />
-            ))
-          ) : (
-            <p className="text-center">{searchQuery.trim() ? `No posts found for "${searchQuery}".` : 'You have not submitted any posts yet.'}</p>
-          )}
+        {/* User's Posts Section */}
+        <div className="user-posts">
+          <h2 className="text-center mb-3">Your Posts</h2>
+          <div className="d-flex flex-wrap justify-content-center">
+            {filteredUserPosts.length > 0 ? (
+              filteredUserPosts.map((post) => (
+                <PostCard
+                  key={post.firebaseKey}
+                  postObj={post}
+                  onUpdate={refreshPosts}
+                  customClass="user-card"
+                  isUserProfile // Pass this prop to enable edit/delete buttons
+                />
+              ))
+            ) : (
+              <p className="text-center">{searchQuery.trim() ? `No posts found for "${searchQuery}".` : 'You have not submitted any posts yet.'}</p>
+            )}
+          </div>
         </div>
       </div>
     </div>
