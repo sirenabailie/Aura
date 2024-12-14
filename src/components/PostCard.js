@@ -124,7 +124,7 @@ function PostCard({ postObj, onUpdate, isUserProfile, customClass }) {
                   key={tagObj.id}
                   variant="outline-light"
                   href={`/Posts/Tags/${tagObj.name}`}
-                  className="badge mx-1"
+                  className="badge mx-1 tag-btn"
                   style={{ fontSize: '0.7rem' }} // Adjust tag font size for smaller cards
                 >
                   {tagObj.name}
@@ -135,6 +135,7 @@ function PostCard({ postObj, onUpdate, isUserProfile, customClass }) {
           <div className="mt-3 d-flex justify-content-between align-items-center">
             {/* View Button */}
             <Button
+              className="view-btn"
               variant="outline-light"
               onClick={() => handleView(postObj.firebaseKey)}
               style={{ fontSize: '0.7rem' }} // Smaller button size
