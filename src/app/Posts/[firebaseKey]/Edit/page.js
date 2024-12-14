@@ -16,11 +16,15 @@ export default function UpdatePost({ params }) {
   }, [firebaseKey]);
 
   if (!editItem) {
-    return <div>Loading...</div>; // Show a loading state until the data is fetched
+    return (
+      <div className="edit-page">
+        <div>Loading...</div> {/* Show a loading state until the data is fetched */}
+      </div>
+    );
   }
 
   return (
-    <div>
+    <div className="edit-page">
       <PostForm postObj={editItem} />
     </div>
   );
