@@ -60,7 +60,7 @@ function UserProfilePage() {
   };
 
   return (
-    <div className="container my-4">
+    <div className="container my-4 user-page">
       {/* Favorites Section */}
       <div className="favorite-posts">
         <h2 className="text-center mb-3">Favorites</h2>

@@ -33,10 +33,16 @@ function AppNavbar() {
             position: 'absolute',
             left: '50%',
             transform: 'translateX(-50%)',
-            color: 'white',
           }}
         >
-          Aura
+          <img
+            src="/images/finalAuraLogo1.png" // Replace with the path to your logo
+            alt="Aura Logo"
+            style={{
+              height: '40px', // Adjust the height as per your needs
+              objectFit: 'contain', // Ensures the image fits well
+            }}
+          />
         </Navbar.Brand>
 
         {/* Search Bar */}

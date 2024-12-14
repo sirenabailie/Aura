@@ -1,8 +1,6 @@
-'use client';
-
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { Form, Button, Container, Col } from 'react-bootstrap';
+import { Form, Button, Col } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { useAuth } from '../../utils/context/authContext';
 import getTags from '../../api/tagData';
@@ -14,25 +12,23 @@ function PostForm({ postObj = {} }) {
   const [formData, setFormData] = useState({
     title: '',
     content: '',
-    tagId: [], // For storing selected tags
-    images: [], // For storing image URLs
+    tagId: [],
+    images: [],
     newImageUrl: '',
   });
-  const [tags, setTags] = useState([]); // All tags from Firebase
+  const [tags, setTags] = useState([]);
 
-  // Fetch all tags from Firebase
   useEffect(() => {
     getTags()
       .then(setTags)
       .catch((error) => console.error('Error fetching tags:', error));
   }, []);
 
-  // Populate formData if editing a post
   useEffect(() => {
     if (postObj.firebaseKey) {
       setFormData({
         ...postObj,
-        tagId: postObj.tagId || [], // Ensure tagId is an array
+        tagId: postObj.tagId || [],
       });
     }
   }, [postObj]);
@@ -46,11 +42,10 @@ function PostForm({ postObj = {} }) {
   };
 
   const handleTagChange = (e) => {
-    // Use selectedOptions to get all selected values
     const selectedTags = Array.from(e.target.selectedOptions).map((option) => option.value);
     setFormData((prevState) => ({
       ...prevState,
-      tagId: selectedTags, // Update tagId with selected values
+      tagId: selectedTags,
     }));
   };
 
@@ -90,64 +85,27 @@ function PostForm({ postObj = {} }) {
   };
 
   return (
-    <Container className="mt-5" style={{ maxWidth: '600px' }}>
-      <h2 className="text-center text-white mb-4">{postObj.firebaseKey ? 'Edit' : 'Add'} Post/Request</h2>
-      <Form
-        onSubmit={handleSubmit}
-        style={{
-          backgroundColor: '#343a40',
-          color: 'white',
-          padding: '20px',
-          borderRadius: '8px',
-        }}
-      >
+    <div className="post-form-container">
+      <h2>{postObj.firebaseKey ? 'Edit' : 'Add'} Post/Request</h2>
+      <Form onSubmit={handleSubmit}>
         {/* Title Input */}
         <Form.Group className="mb-3" controlId="postTitle">
           <Form.Label>Title</Form.Label>
-          <Form.Control
-            type="text"
-            name="title"
-            placeholder="Enter the post title"
-            value={formData.title}
-            onChange={handleChange}
-            style={{
-              backgroundColor: '#495057',
-              color: 'white',
-            }}
-            required
-          />
+          <Form.Control type="text" name="title" placeholder="Enter the post title" value={formData.title} onChange={handleChange} required />
         </Form.Group>
 
         {/* Content Input */}
         <Form.Group className="mb-3" controlId="postContent">
           <Form.Label>Description</Form.Label>
-          <Form.Control
-            as="textarea"
-            name="content"
-            placeholder="Enter the post description"
-            rows={4}
-            value={formData.content}
-            onChange={handleChange}
-            style={{
-              backgroundColor: '#495057',
-              color: 'white',
-            }}
-            required
-          />
+          <Form.Control as="textarea" name="content" placeholder="Enter the post description" rows={4} value={formData.content} onChange={handleChange} required />
         </Form.Group>
 
         {/* Multi-select Tags */}
         <Form.Group as={Col} controlId="postTags">
           <Form.Label>Tags</Form.Label>
-          <Form.Control
-            as="select"
-            multiple // Enable multi-selection
-            value={formData.tagId}
-            onChange={handleTagChange}
-            style={{ backgroundColor: '#495057', color: 'white' }}
-          >
+          <Form.Control as="select" multiple value={formData.tagId} onChange={handleTagChange}>
             {tags.map((tag) => (
-              <option key={tag.firebaseKey} value={tag.firebaseKey}>
+              <option className="tag-option" key={tag.firebaseKey} value={tag.firebaseKey}>
                 {tag.name}
               </option>
             ))}
@@ -158,17 +116,7 @@ function PostForm({ postObj = {} }) {
         <Form.Group className="mb-3" controlId="imageUrls">
           <Form.Label>Image URLs</Form.Label>
           <div className="d-flex">
-            <Form.Control
-              type="text"
-              name="newImageUrl"
-              placeholder="Enter image URL"
-              value={formData.newImageUrl || ''}
-              onChange={handleChange}
-              style={{
-                backgroundColor: '#495057',
-                color: 'white',
-              }}
-            />
+            <Form.Control type="text" name="newImageUrl" placeholder="Enter image URL" value={formData.newImageUrl || ''} onChange={handleChange} />
             <Button variant="outline-light" onClick={handleAddImageUrl} style={{ marginLeft: '8px' }}>
               Add
             </Button>
@@ -195,12 +143,10 @@ function PostForm({ postObj = {} }) {
         </Form.Group>
 
         <div className="text-center">
-          <Button variant="dark" type="submit">
-            {postObj.firebaseKey ? 'Update' : 'Create'} Post
-          </Button>
+          <Button type="submit">{postObj.firebaseKey ? 'Update' : 'Create'} Post</Button>
         </div>
       </Form>
-    </Container>
+    </div>
   );
 }
 
@@ -208,7 +154,7 @@ PostForm.propTypes = {
   postObj: PropTypes.shape({
     title: PropTypes.string,
     content: PropTypes.string,
-    tagId: PropTypes.arrayOf(PropTypes.string), // Updated for multiple tags
+    tagId: PropTypes.arrayOf(PropTypes.string),
     images: PropTypes.arrayOf(PropTypes.string),
     firebaseKey: PropTypes.string,
   }),

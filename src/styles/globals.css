@@ -46,7 +46,7 @@ html, body {
 }
 
 .home-background {
-  background-image: url('/images/retroheadphones.png');
+  background-image: url('/images/auraMultiMedia.png');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -375,4 +375,113 @@ border: 1px solid rgba( 255, 255, 255, 0.18 )!important;
 
 .cancel-btn:hover {
   background-color: rgb(114, 186, 180, 0.6);
+}
+
+.add-post-page {
+  background-image: url('/images/auraRequest1.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  color: white;
+  min-height: 100vh; 
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; 
+  align-items: center;
+  margin: 0; 
+  padding: 0; 
+  box-sizing: border-box; 
+  position: relative; /* Add this to manage navbar overlap */
+  text-shadow: 2px 2px 4px rgb(1, 44, 56); 
+}
+
+.post-form-container {
+  background: rgba(170, 247, 241, 0.483); /* Match modal background */
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37); /* Match modal shadow */
+  backdrop-filter: blur(10px); /* Blur effect for modern look */
+  -webkit-backdrop-filter: blur(10px); /* Safari compatibility */
+  border-radius: 10px; /* Rounded corners */
+  border: 1px solid rgba(255, 255, 255, 0.18); /* Modal border style */
+  color: white; /* Text color */
+  padding: 20px; /* Padding for content inside */
+  width: 100%; /* Ensure it spans the container width */
+  max-width: 600px; /* Restrict to a maximum width */
+  margin: 40px auto; /* Center the form with margin */
+  margin-top: 80px; /* Add top margin to clear the navbar */
+}
+
+.post-form-container h2 {
+  color: white; /* White title */
+  font-size: 1.5rem; /* Adjust size */
+  text-shadow: 2px 2px 4px rgba(3, 54, 61, 0.9); /* Subtle text shadow */
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.post-form-container .form-control {
+  background-color: rgba(255, 255, 255, 0.1); /* Match modal input */
+  color: white; /* Input text color */
+  border: 1px solid rgba(255, 255, 255, 0.5); /* Input border style */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7); /* Text shadow for input text */
+}
+
+.post-form-container .form-control::placeholder {
+  color: rgba(255, 255, 255, 0.8); /* Placeholder text color */
+}
+
+.post-form-container .form-control:focus {
+  background-color: rgba(255, 255, 255, 0.2); /* Highlight on focus */
+  border: 1px solid rgba(255, 255, 255, 0.8); /* Stronger border on focus */
+  box-shadow: none; /* Remove default Bootstrap shadow */
+}
+
+.post-form-container .btn {
+  color: white;
+  background-color: rgba(255, 255, 255, 0.1); /* Match modal buttons */
+  border: 1px solid rgba(255, 255, 255, 0.5); /* Modal border */
+  text-shadow: 2px 2px 4px rgba(3, 54, 61, 0.9); /* Button text shadow */
+}
+
+.post-form-container .btn:hover {
+  background-color: rgba(255, 255, 255, 0.3); /* Hover effect */
+  color: white;
+  text-shadow: 2px 2px 4px rgba(3, 54, 61, 0.9); /* Stronger shadow on hover */
+}
+
+.post-form-container .btn:focus,
+.post-form-container .btn:active {
+  background-color: rgba(255, 255, 255, 0.4); /* Focus/active effect */
+  color: white;
+  border: none;
+  text-shadow: 2px 2px 4px rgba(3, 54, 61, 0.9); /* Stronger shadow on focus */
+}
+
+.post-form-container select {
+  background-color: rgba(255, 255, 255, 0.1); /* Same as form-control background */
+  color: white; /* Text color */
+  border: 1px solid rgba(255, 255, 255, 0.5); /* Match the input borders */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7); /* Add subtle shadow */
+  outline: none; /* Remove default outline */
+}
+
+.post-form-container select:focus {
+  background-color: rgba(255, 255, 255, 0.2); /* Highlighted background on focus */
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.8); /* Stronger border on focus */
+}
+
+.post-form-container select option {
+  background-color: transparent; /* Match input background */
+  color: white; /* Text color */
+}
+
+.post-form-container select option:hover {
+  background-color: rgba(255, 255, 255, 0.3); /* Hover effect for options */
+  color: white; /* Ensure text stays visible */
+}
+
+.post-form-container select option:checked {
+  background-color: rgb(91,160,176, 0.6);; /* Background color for selected options */
+  color: white; /* Text color for selected options */
 }
