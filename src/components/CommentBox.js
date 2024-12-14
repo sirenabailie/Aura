@@ -71,7 +71,11 @@ function CommentBox({ postId, comments, onCreateComment, onEditComment, onDelete
                 {editComment && editComment.firebaseKey === comment.firebaseKey ? (
                   <div className="w-100">
                     <InputGroup>
-                      <FormControl value={editedContent} onChange={(e) => setEditedContent(e.target.value)} />
+                      <FormControl
+                        value={editedContent}
+                        onChange={(e) => setEditedContent(e.target.value)}
+                        className="edit-input" // Add unique class for edit input
+                      />
                       <Button className="save-btn" onClick={handleSaveEdit}>
                         Save
                       </Button>
@@ -107,7 +111,7 @@ function CommentBox({ postId, comments, onCreateComment, onEditComment, onDelete
           </ListGroup>
 
           <InputGroup className="mt-3">
-            <FormControl placeholder="Add your recommendation..." value={newComment} onChange={(e) => setNewComment(e.target.value)} />
+            <FormControl placeholder="Add your recommendation..." value={newComment} onChange={(e) => setNewComment(e.target.value)} className="add-input" />
             <Button
               className={`submit-btn ${!newComment.trim() ? 'placeholder' : ''}`} // Add 'placeholder' class if input is empty
               onClick={handleCreateComment}

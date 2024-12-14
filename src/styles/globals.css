@@ -315,13 +315,20 @@ border: 1px solid rgba( 255, 255, 255, 0.18 )!important;
 /* Input Fields in Modal */
 .modal-body .form-control {
   background-color: rgba(255, 255, 255, 0.1); 
-  color: white; /* White text */
+  color: black; /* White text */
   border: 1px solid rgba(255, 255, 255, 0.5);
 }
 
 .modal-body .form-control:focus {
   background-color: rgba(255, 255, 255, 0.2); 
-  color: white;
+  color: black;
+  border: 1px solid rgba(255, 255, 255, 0.8); 
+  box-shadow: none; 
+}
+
+.modal-body .form-control:active {
+  background-color: rgba(255, 255, 255, 0.2); 
+  color: black;
   border: 1px solid rgba(255, 255, 255, 0.8); 
   box-shadow: none; 
 }
@@ -344,6 +351,10 @@ border: 1px solid rgba( 255, 255, 255, 0.18 )!important;
   background-color: rgba(255, 255, 255, 0.4);
   color: white;
   border: none;
+}
+
+.add-input {
+  color: white!important;
 }
 
 .comment-btn {
@@ -627,7 +638,7 @@ border: 1px solid rgba( 255, 255, 255, 0.18 )!important;
 }
 
 .tag-page-podcasts {
-  background-image: url('/images/auraPodcast.png');
+  background-image: url('/images/auraPodcast2.png');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -643,4 +654,24 @@ border: 1px solid rgba( 255, 255, 255, 0.18 )!important;
 
 .tag-page-podcasts h1 {
   text-shadow: 2px 2px 4px rgb(1, 44, 56);
+}
+
+.tag-btn:hover {
+  background-color: rgb(125, 196, 247);
+  color: white
+}
+
+.view-btn:hover {
+  background-color: rgb(143,138,225);
+  color: white
+}
+
+/* Style the existing close button in the Offcanvas */
+.offcanvas-header .btn-close {
+  filter: invert(1); /* Invert to make it white */
+  background-color: transparent; 
+}
+
+.offcanvas-header .btn-close:hover {
+  filter: invert(1) brightness(0.8); /* Darken slightly on hover */
 }
