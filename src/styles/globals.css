@@ -675,3 +675,19 @@ border: 1px solid rgba( 255, 255, 255, 0.18 )!important;
 .offcanvas-header .btn-close:hover {
   filter: invert(1) brightness(0.8); /* Darken slightly on hover */
 }
+
+.edit-page {
+  background-image: url('/images/auraBackground5.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  color: white;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 50px;
+}
