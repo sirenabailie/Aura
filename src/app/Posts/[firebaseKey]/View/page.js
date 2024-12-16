@@ -69,7 +69,7 @@ function ViewPostPage() {
 
             {/* Wrapping the elements below the carousel */}
             <div className="post-details" style={{ width: '100%', maxWidth: '600px', margin: '10px auto' }}>
-              <p className="view-content" style={{ marginBottom: '20px', maxWidth: '550px' }}>
+              <p className="view-content" style={{ marginBottom: '20px', maxWidth: '700px' }}>
                 {post.content}
               </p>
               <hr style={{ width: '100%', maxWidth: '600px', margin: '0px' }} />
