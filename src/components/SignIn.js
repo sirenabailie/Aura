@@ -16,7 +16,7 @@ function Signin() {
     >
       {/* Optimized Background Image */}
       <Image
-        src="/images/auralogo11expandhighrescanva.png"
+        src="/images/auraHome.png"
         alt="Aura Background"
         layout="fill"
         objectFit="cover"
